@@ -1,0 +1,247 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.dropotron.min.js"></script>
+    <script src="/js/skel.min.js"></script>
+    <script src="/js/skel-layers.min.js"></script>
+    <script src="/js/init.js"></script>
+    <link rel="stylesheet" href="/css/pygment.css" />
+    <noscript>
+        <link rel="stylesheet" href="/css/skel.css" />
+        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="stylesheet" href="/css/style-noscript.css" />
+    </noscript>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link  href="http://fonts.googleapis.com/css?family=Anonymous+Pro:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css" >
+    <!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+    <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie/v9.css" /><![endif]-->
+
+    <title>git常用命令 | Rivarrl's Home </title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width">
+</head>
+
+<body class=" loading">
+
+
+
+    <!-- Header -->
+    <header id="header" >
+        <h1 class="logo">
+            <a href="../..">Rivarrl's Home</a>
+        </h1>
+        <nav id="nav">
+            <ul>
+                <!-- <li class="current"><a href="index.html">Welcome</a></li> -->
+                <li class="submenu">
+                    <a href="../../blog">博客列表</a>
+                    <ul>
+                            <li class="active">
+                                <a href="../../category/notes/">Notes</a>
+                            </li>
+                    </ul>
+                </li>
+                <li><a href="#" class="button special">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<!-- Main -->
+<article id="main">
+
+  <header class="special container">
+    <span class="icon fa-"></span>
+    <h2>git常用命令</h2>
+    <!-- add page sub title here -->
+    <p>Posted on 2018-09-28T00:29:00Z by Rivarrl</p>
+    <p></p>
+  </header>
+
+  <!-- One -->
+    <section class="wrapper style4 container">
+
+      <!-- Content -->
+        <div class="content">
+          <section>
+            <!-- <a href="#" class="image feature"><img src="images/pic04.jpg" alt="" /></a> -->
+            <h3>Posted in <a href="../../category/notes/">Notes</a></h3>
+            <p class="tags">
+                <a href="../../tag/git/">git</a>
+</p>
+            <p><p><font color=#0099ff size=6 face="黑体">git常用命令</font>
+<br/><br/>
+<p><font size=5 face="黑体">本文简介：
+<br/>节选自https://www.cnblogs.com/chenwolong/p/GIT.html
+<br/>原文实在太多，对我来说不符合常用的标准，不方便查阅
+<br/>所以只节选一部分自己常用的作为笔记方便以后查看</font></p></p>
+<hr>
+<p><font size=5 face="黑体"> 一、新建工程</font></p>
+<h4>&gt; 在[当前路径|新建路径]新建一个Git代码库</h4>
+<div class="highlight"><pre><span></span>git init [|project-name]
+</pre></div>
+
+
+<p><br> </p>
+<p><font size=5 face="黑体"> 二、克隆工程</font> </p>
+<h4>&gt; 克隆url的master分支到当前路径下</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git clone [url]</font></pre> </p>
+<h4>&gt; 下载一个项目的指定分支</h4>
+<div class="highlight"><pre><span></span>git clone -b [branch] [url]
+</pre></div>
+
+
+<p><br> </p>
+<p><font size=5 face="黑体"> 二、增删文件</font> </p>
+<h4>&gt; 添加指定文件到暂存区</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git add [file1] [file2] ...</font></pre> </p>
+<h4>&gt; 添加指定目录到暂存区，包括子目录</h4>
+<div class="highlight"><pre><span></span>git add [dir]
+</pre></div>
+
+
+<h4>&gt; 添加当前目录的所有文件到暂存区</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git add .</font></pre> </p>
+<h4>&gt; 删除工作区文件，并且将这次删除放入暂存区</h4>
+<div class="highlight"><pre><span></span>git rm [file1] [file2] ...
+</pre></div>
+
+
+<h4>&gt; 改名文件，并且将这个改名放入暂存区</h4>
+<div class="highlight"><pre><span></span>git mv [file-original] [file-renamed]
+</pre></div>
+
+
+<p><br> 
+<font size=5 face="黑体"> 三、代码提交</font> </p>
+<h4>&gt; 提交暂存区到仓库区</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git commit -m [message]</font></pre> </p>
+<h4>&gt; 提交暂存区的指定文件到仓库区</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git commit [file1] [file2] ... -m [message]</font></pre> </p>
+<h4>&gt; 提交工作区自上次commit之后的变化，直接到仓库区</h4>
+<div class="highlight"><pre><span></span>git commit -a
+</pre></div>
+
+
+<h4>&gt; 提交时显示所有diff信息</h4>
+<div class="highlight"><pre><span></span>git commit -v
+</pre></div>
+
+
+<h4>&gt; 使用一次新的commit，替代上一次提交</h4>
+<p>-- 如果代码没有任何新变化，则用来改写上一次commit的提交信息</p>
+<div class="highlight"><pre><span></span>git commit --amend -m [message]
+</pre></div>
+
+
+<p><br> 
+<font size=5 face="黑体"> 四、分支</font> </p>
+<h4>&gt; 列出[本地|远程|所有]分支</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git branch [|-r|-a]</font></pre> </p>
+<h4>&gt; 新建一个分支，但依然停留在当前分支</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git branch [branch-name]</font></pre> </p>
+<h4>&gt; 新建一个分支，并切换到该分支</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git checkout -b [branch]</font></pre> </p>
+<h4>&gt; 切换到指定分支，并更新工作区</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git checkout [branch-name]</font></pre> </p>
+<h4>&gt; 切换到上一个分支</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git checkout -</font></pre> </p>
+<h4>&gt; 建立追踪关系，在现有分支与指定的远程分支之间</h4>
+<div class="highlight"><pre><span></span>git branch --set-upstream [branch] [remote-branch]
+</pre></div>
+
+
+<h4>&gt; 合并指定分支到当前分支</h4>
+<div class="highlight"><pre><span></span>git merge [branch]
+</pre></div>
+
+
+<h4>&gt; 删除分支</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git branch -d [branch-name]</font></pre> </p>
+<p><br> 
+<font size=5 face="黑体"> 五、远程操作</font> </p>
+<h4>&gt; 取回远程仓库的变化，并与本地分支合并</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git pull [remote] [branch]</font></pre></p>
+<h4>&gt; 上传本地指定分支到远程仓库</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git push [remote] [branch]</font></pre></p>
+<h4>&gt; 更新远程仓储</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git remote update</font></pre></p>
+<h4>&gt; 重置暂存区与工作区，与上一次commit保持一致</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git reset --hard</font></pre></p>
+<p><br> 
+<font size=5 face="黑体"> 六、查看信息</font></p>
+<h4>&gt; 显示有变更的文件</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git status</font></pre></p>
+<h4>&gt; 显示当前分支的版本历史</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git log</font></pre></p>
+<h4>&gt; 显示暂存区和工作区的代码差异</h4>
+<p><pre><font color=#0099ff size=4 face="verdana">git diff</font></pre></p>
+<h4>&gt; 显示今天你写了多少行代码</h4>
+<div class="highlight"><pre><span></span>git diff --shortstat &quot;@{0 day ago}&quot;
+</pre></div>
+
+
+<h4>&gt; 显示某次提交的元数据和内容变化</h4>
+<div class="highlight"><pre><span></span>git show [commit]
+</pre></div>
+
+
+<h4>&gt; 显示当前分支的最近几次提交</h4>
+<div class="highlight"><pre><span></span>git reflog
+</pre></div>
+
+
+<h4>&gt; 从本地master拉取代码更新当前分支：branch 一般为master</h4>
+<div class="highlight"><pre><span></span>git rebase [branch]
+</pre></div></p>
+          </section>
+        </div>
+
+    </section>
+
+    <!-- Two -->
+    <section class="wrapper style1 container special">
+        <div class="row">
+          <div class="4u">
+
+            <section>
+              <span class="icon feature fa-"></span>
+              <header>
+                <a href="../../blog/git_bash" rel='bookmark'><h3>git常用命令</h3></a>
+              </header>
+              <p>git常用命令 本文简介： 节选自https://www.cnblogs.com/chenwolong/p/GIT.html 原文实在太多，对我来说不符合常用的标准，不方便查阅 所以只节选一部分</p>
+              <footer>
+                  <ul class="buttons">
+                      <li><a href="../../blog/git_bash" class="button small">Read More</a></li>
+                  </ul>
+              </footer>
+            </section>
+
+          </div>
+        </div>
+    </section>
+  </article>
+
+
+
+<!-- Footer -->
+<footer id="footer">
+
+    <ul class="icons">
+        <li>
+          <a href="#" class="icon circle fa fa-You can add links in your config file"><span class="label">You can add links in your config file</span></a>
+        </li>
+        <li>
+          <a href="#" class="icon circle fa fa-Another social link"><span class="label">Another social link</span></a>
+        </li>
+    </ul>
+
+    <span class="copyright">&copy; Untitled. All rights reserved. Design: <a href="http://html5up.net">HTML5 UP</a>.</span>
+
+</footer>
+</body>
+</html>

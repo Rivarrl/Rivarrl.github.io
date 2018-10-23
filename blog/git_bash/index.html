@@ -82,40 +82,25 @@
 <hr>
 <p><font size=5 face="黑体"> 一、新建工程</font></p>
 <h4>&gt; 在[当前路径|新建路径]新建一个Git代码库</h4>
-<div class="highlight"><pre><span></span>git init [|project-name]
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git init [|project-name]</font></pre></p>
 <p><br> </p>
 <p><font size=5 face="黑体"> 二、克隆工程</font> </p>
 <h4>&gt; 克隆url的master分支到当前路径下</h4>
 <p><pre><font color=#0099ff size=4 face="verdana">git clone [url]</font></pre> </p>
 <h4>&gt; 下载一个项目的指定分支</h4>
-<div class="highlight"><pre><span></span>git clone -b [branch] [url]
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git clone -b [branch] [url]</font></pre></p>
 <p><br> </p>
 <p><font size=5 face="黑体"> 二、增删文件</font> </p>
 <h4>&gt; 添加指定文件到暂存区</h4>
 <p><pre><font color=#0099ff size=4 face="verdana">git add [file1] [file2] ...</font></pre> </p>
 <h4>&gt; 添加指定目录到暂存区，包括子目录</h4>
-<div class="highlight"><pre><span></span>git add [dir]
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git add [dir]</font></pre></p>
 <h4>&gt; 添加当前目录的所有文件到暂存区</h4>
 <p><pre><font color=#0099ff size=4 face="verdana">git add .</font></pre> </p>
 <h4>&gt; 删除工作区文件，并且将这次删除放入暂存区</h4>
-<div class="highlight"><pre><span></span>git rm [file1] [file2] ...
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git rm [file1] [file2] ...</font></pre></p>
 <h4>&gt; 改名文件，并且将这个改名放入暂存区</h4>
-<div class="highlight"><pre><span></span>git mv [file-original] [file-renamed]
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git mv [file-original] [file-renamed]</font></pre></p>
 <p><br> 
 <font size=5 face="黑体"> 三、代码提交</font> </p>
 <h4>&gt; 提交暂存区到仓库区</h4>
@@ -123,21 +108,12 @@
 <h4>&gt; 提交暂存区的指定文件到仓库区</h4>
 <p><pre><font color=#0099ff size=4 face="verdana">git commit [file1] [file2] ... -m [message]</font></pre> </p>
 <h4>&gt; 提交工作区自上次commit之后的变化，直接到仓库区</h4>
-<div class="highlight"><pre><span></span>git commit -a
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git commit -a</font></pre></p>
 <h4>&gt; 提交时显示所有diff信息</h4>
-<div class="highlight"><pre><span></span>git commit -v
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git commit -v</font></pre></p>
 <h4>&gt; 使用一次新的commit，替代上一次提交</h4>
-<p>-- 如果代码没有任何新变化，则用来改写上一次commit的提交信息</p>
-<div class="highlight"><pre><span></span>git commit --amend -m [message]
-</pre></div>
-
-
+<p>-- 如果代码没有任何新变化，则用来改写上一次commit的提交信息
+<pre><font size=4 face="verdana">git commit --amend -m [message]</font></pre></p>
 <p><br> 
 <font size=5 face="黑体"> 四、分支</font> </p>
 <h4>&gt; 列出[本地|远程|所有]分支</h4>
@@ -151,15 +127,9 @@
 <h4>&gt; 切换到上一个分支</h4>
 <p><pre><font color=#0099ff size=4 face="verdana">git checkout -</font></pre> </p>
 <h4>&gt; 建立追踪关系，在现有分支与指定的远程分支之间</h4>
-<div class="highlight"><pre><span></span>git branch --set-upstream [branch] [remote-branch]
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git branch --set-upstream [branch] [remote-branch]</font></pre></p>
 <h4>&gt; 合并指定分支到当前分支</h4>
-<div class="highlight"><pre><span></span>git merge [branch]
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git merge [branch]</font></pre></p>
 <h4>&gt; 删除分支</h4>
 <p><pre><font color=#0099ff size=4 face="verdana">git branch -d [branch-name]</font></pre> </p>
 <p><br> 
@@ -181,23 +151,13 @@
 <h4>&gt; 显示暂存区和工作区的代码差异</h4>
 <p><pre><font color=#0099ff size=4 face="verdana">git diff</font></pre></p>
 <h4>&gt; 显示今天你写了多少行代码</h4>
-<div class="highlight"><pre><span></span>git diff --shortstat &quot;@{0 day ago}&quot;
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git diff --shortstat "@{0 day ago}"</font></pre></p>
 <h4>&gt; 显示某次提交的元数据和内容变化</h4>
-<div class="highlight"><pre><span></span>git show [commit]
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git show [commit]</font></pre></p>
 <h4>&gt; 显示当前分支的最近几次提交</h4>
-<div class="highlight"><pre><span></span>git reflog
-</pre></div>
-
-
+<p><pre><font size=4 face="verdana">git reflog</font></pre></p>
 <h4>&gt; 从本地master拉取代码更新当前分支：branch 一般为master</h4>
-<div class="highlight"><pre><span></span>git rebase [branch]
-</pre></div></p>
+<p><pre><font size=4 face="verdana">git rebase [branch]</font></pre></p></p>
           </section>
         </div>
 

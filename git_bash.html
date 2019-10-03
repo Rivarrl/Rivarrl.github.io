@@ -200,5 +200,29 @@
             </div>
         </div>
         <!-- /Footer -->
+        <!-- live2d -->
+        <script src="./js/L2Dwidget.min.js"></script>
+        <script src="./js/L2Dwidget.0.min.js"></script>
+        <script>
+            L2Dwidget.init({
+                "model":{
+                    "scale":1,"hHeadPos":0.5,"vHeadPos":0.618,
+                    "jsonPath": "./live2d-models/live2d-widget-model-tororo/assets/tororo.model.json"
+                },
+                "display":{
+                    "superSample":2,"width":100,"height":220,"position":"right","hOffset":-30,"vOffset":-200
+                },
+                "mobile":{
+                    "show":false,"scale":0.5
+                },
+                "react":{
+                    "opacityDefault":0.9,"opacityOnHover":0.2
+                }
+            });
+        </script>
+        <div id="live2d-widget">
+            <canvas id="live2dcanvas" width="200" height="440"
+            style="position: fixed; opacity: 1; right: 0px; bottom: 0; z-index: 99999; pointer-events: none;"></canvas>
+        </div>
     </body>
 </html>

@@ -122,20 +122,21 @@ z在0-1之间, x &gt; z的期望为1-z, x &lt; z的期望为z
 <p>注意求不等式 0不能作为分母 以及x的真实取值范围[0,1]</p>
 </blockquote>
 <p>代码：</p>
-<pre><code class="py">def yt_2_ensemble(arr):
-    # arr: label A0 A1 B0 B1
-    res = 0.0
-    for e in arr:
-        label, A0, A1, B0, B1 = e
-        a, b = B1 - B0, A0 - A1 + B1 - B0
-        if b == 0: continue
-        n = min(1, max(a/b, 0))
-        if (label == 0) ^ (b &lt; 0):
-            res += 1 - n
-        else:
-            res += n
-    return res
-</code></pre>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">yt_2_ensemble</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="c1"># arr: label A0 A1 B0 B1</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">:</span>
+        <span class="n">label</span><span class="p">,</span> <span class="n">A0</span><span class="p">,</span> <span class="n">A1</span><span class="p">,</span> <span class="n">B0</span><span class="p">,</span> <span class="n">B1</span> <span class="o">=</span> <span class="n">e</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">B1</span> <span class="o">-</span> <span class="n">B0</span><span class="p">,</span> <span class="n">A0</span> <span class="o">-</span> <span class="n">A1</span> <span class="o">+</span> <span class="n">B1</span> <span class="o">-</span> <span class="n">B0</span>
+        <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="o">/</span><span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">label</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">b</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">n</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">n</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+
 
 <h4>题目2 - Party</h4>
 <p>你是一个活动晚会的组织者，晚会总时长为t分钟，共有n个候选节目。
@@ -160,17 +161,18 @@ max(dp[i][j], dp[i+1][j-c[i]] + (a[i] + b[i] * (j-c[i]))), &amp; j &gt;= c[i]
 \end{cases}
 $$</p>
 <p>代码：</p>
-<pre><code class="py">def yt_3_party(arr, t, n):
-    dp = [[0] * (t+1) for _ in range(n+1)]
-    for i in range(n-1, -1, -1):
-        a, b, c = arr[i]
-        for j in range(t, -1, -1):
-            if j &lt; c:
-                dp[i][j] = dp[i+1][j]
-            else:
-                dp[i][j] = max(dp[i+1][j], dp[i+1][j-c] + a + b * (j - c))
-    return dp[0][t]
-</code></pre>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">yt_3_party</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">c</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">t</span><span class="p">]</span>
+</pre></div>
+
 
 <h4>题目3 - Beam Search</h4>
 <p>现在有一个长度为n的权重序列 W1, W2, &hellip;, Wn, 其中Wi表示第i时刻的权重分布, Wi可表示为Wi = (Wi1, Wi2, &hellip;, Wim)
@@ -192,35 +194,35 @@ beam search 是一个启发式搜索算法
 <p>注意：字典序中, ascii码更大的排名更靠后</p>
 </blockquote>
 <p>代码：</p>
-<pre><code class="py">def yt_4_beam_search(arr, n, m, k):
-    def strcmp(s1, s2, i=0):
-        if i == len(s1): return False
-        if s1[i] == s2[i]: return strcmp(s1, s2, i+1)
-        else: return ord(s1[i]) &gt; ord(s2[i]) # 字典序 =&gt; ascii码值高的更小
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">yt_4_beam_search</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">strcmp</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">):</span> <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="k">return</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="k">return</span> <span class="nb">ord</span><span class="p">(</span><span class="n">s1</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">ord</span><span class="p">(</span><span class="n">s2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="c1"># 字典序 =&gt; ascii码值高的更小</span>
 
-    class Beam:
-        def __init__(self, key, val):
-            self.key = key
-            self.val = val
+    <span class="k">class</span> <span class="nc">Beam</span><span class="p">:</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">=</span> <span class="n">val</span>
 
-        def __lt__(self, other):
-            return strcmp(self.key, other.key) if self.val == other.val else self.val &lt; other.val
+        <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">strcmp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">key</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">val</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">val</span>
 
-    import heapq
-    letter = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;
-    origin = [Beam(letter[i], arr[0][i]) for i in range(m)]
-    heapq.heapify(origin)
-    status = heapq.nlargest(k, origin)
-    print([st.key for st in status])
-    for i in range(1, n):
-        tmp = []
-        for j in range(m):
-            for st in status:
-                tmp.append(Beam(st.key + letter[j], st.val+arr[i][j]))
-        heapq.heapify(tmp)
-        status = heapq.nlargest(k, tmp)
-    return [st.key for st in status]
-</code></pre>
+    <span class="kn">import</span> <span class="nn">heapq</span>
+    <span class="n">letter</span> <span class="o">=</span> <span class="s2">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>
+    <span class="n">origin</span> <span class="o">=</span> <span class="p">[</span><span class="n">Beam</span><span class="p">(</span><span class="n">letter</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span>
+    <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">([</span><span class="n">st</span><span class="o">.</span><span class="n">key</span> <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">status</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">status</span><span class="p">:</span>
+                <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Beam</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">key</span> <span class="o">+</span> <span class="n">letter</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">st</span><span class="o">.</span><span class="n">val</span><span class="o">+</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]))</span>
+        <span class="n">heapq</span><span class="o">.</span><span class="n">heapify</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">st</span><span class="o">.</span><span class="n">key</span> <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">status</span><span class="p">]</span>
+</pre></div>
 
 
         

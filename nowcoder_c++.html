@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="牛客C++校招面试题合集总结 2019-10-17 明天面试c++服务端，临时恶补一下 string字符串末尾有结束符’\0’ strcpy函数直到遇到’\0’才会停止 strlen函数不计算’\0’占位 写出完整的strcpy函数 要让函数改变一个变量(int a)的值，需要传地址(&amp;a), 改变地址参数的值(int *a)用二级指针(**a)...">
+        <meta name="keywords" content="C++, Exam">
+        <link rel="icon" href="./favicon.ico">
+
+        <title>牛客C++校招面试题合集总结 - Rivarrl</title>
+
+        <!-- Stylesheets -->
+        <link href="./css/all.min.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('./images/background.jpg'); background-position: center; background-size: cover;">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="./"><img class="mr20" src="./images/logo.png" alt="logo">Rivarrl</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="./">Homepage</a>
+                                <a href="./categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">牛客C++校招面试题合集总结</h1>
+                      <p class="header-date">By <a href="./author/rivarrl.html">Rivarrl</a>, 2019-10-16 23:23:00, modified 2019-10-16 23:23:00, in category <a href="./category/notes.html">Notes</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="./tag/c.html">C++</a>, <a href="./tag/exam.html">Exam</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <h3>牛客C++校招面试题合集总结</h3>
+<blockquote>
+<p>2019-10-17
+  明天面试c++服务端，临时恶补一下</p>
+</blockquote>
+<ol>
+<li>string字符串末尾有结束符&rsquo;\0&rsquo;</li>
+<li>strcpy函数直到遇到&rsquo;\0&rsquo;才会停止</li>
+<li>strlen函数不计算&rsquo;\0&rsquo;占位</li>
+<li>写出完整的strcpy函数</li>
+<li>要让函数改变一个变量(int a)的值，需要传地址(&amp;a), 改变地址参数的值(int *a)用二级指针(**a)</li>
+<li>函数内的局部变量会在结束前被释放，返回地址而不能返回引用</li>
+<li>申请内存完成操作后记得使用free函数free(str)；开启的指针记得释放str=NULL;避免野指针出现；printf函数使用格式化printf(&ldquo;%s&rdquo;, str);</li>
+<li>如果内存紧张，可能导致malloc分配失败，此时会返回NULL，所以要对分配结果进行检查</li>
+<li>不返回值时函数用void修饰；指针一定要初始化，否则会出现野指针问题；野指针可能指向系统区(如*p = NULL指向0x00000000处，此处内存不允许访问, 如果int *p=NULL; *p=*p1)，导致程序运行的崩溃</li>
+<li>float double 存储时候，存储的并不是精确数。所以并不能跟0直接比较。需要一个范围。</li>
+<li>Windows NT 32位平台下指针所占用内存大小为4字节；使用数组名做形参，其失去了const属性，变为普通指针，失去常量属性的指针可以进行自增自减等操作</li>
+<li>由于宏实现函数的功能是通过参数替换，编写宏的时候注意将宏定义的参数和整个宏分别用括号括起来，避免产生歧义；宏的副作用：参数替换中2次用同一参数A的话，如果传参为p++，则会将p值自增两次</li>
+<li>c不支持重载而c++支持重载的原因是c++编译器会在c编译器对函数名前面加双下划线的基础上再在后面加上对应的参数类型如</li>
+</ol>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>void foo(int x, int y)
+对应
+c:__foo
+c++:__foo_int_int
+</pre></div>
+
+
+<ol start="14">
+<li>代码题，如果循环step超过len，先对len取余</li>
+<li>考察结构体的定义，int16 -&gt; uint16 or UIN16</li>
+<li>构造函数，析构函数，复制构造函数和拷贝构造函数</li>
+<li>const和static关键字</li>
+<li>小端(little_endian): 低地址存放低数据(pc) 大端(big_endian): 低地址存放高数据(手机,网络); union联合体共用内存区域，且一定从低地址开始存放数据</li>
+<li>求1+2+..+n，等差数列求和公式</li>
+<li>static关键字的作用(见17)</li>
+<li>c++和c的区别</li>
+<li>同17</li>
+<li>同17</li>
+<li>四种cast：<code>static_cast, dynamic_cast, const_cast, reinterpret_cast</code></li>
+<li>指针和引用的区别</li>
+<li>三角形坐标面积公式：<code>S=(1/2)*(x1y2+x2y3+x3y1-x2y1-x3y2-x1y3)</code>或者<code>S=(1/2)*((x2-x1)*(y3-y1) - (x3-x1)*(y2-y1))</code></li>
+<li>四种智能指针：<code>shared_ptr,unique_ptr,weak_ptr,auto_ptr</code></li>
+</ol>
+<p>1) string字符串末尾有结束符&rsquo;\0&rsquo;</p>
+<p>分析下面代码有什么问题？</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">test1</span>()
+{
+ <span style="color: #00BB00; font-weight: bold">char</span> string[<span style="color: #666666">10</span>];
+ <span style="color: #00BB00; font-weight: bold">char</span><span style="color: #666666">*</span> str1 <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;0123456789&quot;</span>;
+ strcpy( string, str1 );
+}
+</pre></div>
+
+
+<p>会造成数组越界, str1(含&rsquo;\0&rsquo;)有11字节，string只有10字节</p>
+<p>2) strcpy函数直到遇到&rsquo;\0&rsquo;才会停止</p>
+<p>分析下面代码有什么问题？</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">test2</span>()
+{
+ <span style="color: #00BB00; font-weight: bold">char</span> string[<span style="color: #666666">10</span>], str1[<span style="color: #666666">10</span>];
+ <span style="color: #00BB00; font-weight: bold">int</span> i;
+ <span style="color: #AA22FF; font-weight: bold">for</span>(i<span style="color: #666666">=0</span>; i<span style="color: #666666">&lt;10</span>; i<span style="color: #666666">++</span>)
+ {
+ str1  <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;a&#39;</span>;
+ }
+strcpy( string, str1 );
+}
+</pre></div>
+
+
+<p>3) 指出下面代码有什么问题？</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">test3</span>(<span style="color: #00BB00; font-weight: bold">char</span><span style="color: #666666">*</span> str1)
+{
+ <span style="color: #AA22FF; font-weight: bold">if</span>(str1 <span style="color: #666666">==</span> <span style="color: #AA22FF">NULL</span>){
+        <span style="color: #AA22FF; font-weight: bold">return</span> ;
+ }
+ <span style="color: #00BB00; font-weight: bold">char</span> string[<span style="color: #666666">10</span>];
+ <span style="color: #AA22FF; font-weight: bold">if</span>( strlen( str1 ) <span style="color: #666666">&lt;=</span> <span style="color: #666666">10</span> )
+ {
+ strcpy( string, str1 );
+ }
+}
+</pre></div>
+
+
+<p>if(strlen(str1) &lt;= 10)应改为if(strlen(str1) &lt; 10)，因为strlen的结果未统计’\0’所占用的1个字节。</p>
+<p>4) 写出完整的strcpy函数</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span><span style="color: #00A000">strcpy</span>( <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>strDest, <span style="color: #AA22FF; font-weight: bold">const</span> <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>strSrc )
+{
+ assert( (strDest <span style="color: #666666">!=</span> <span style="color: #AA22FF">NULL</span>) <span style="color: #666666">&amp;&amp;</span> (strSrc <span style="color: #666666">!=</span> <span style="color: #AA22FF">NULL</span>) );
+ <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>address <span style="color: #666666">=</span> strDest;
+ <span style="color: #AA22FF; font-weight: bold">while</span>((<span style="color: #666666">*</span>strDest<span style="color: #666666">++</span> <span style="color: #666666">=</span> <span style="color: #666666">*</span>strSrc<span style="color: #666666">++</span>)<span style="color: #666666">!=</span><span style="color: #BB4444">&#39;\0&#39;</span>);
+ <span style="color: #AA22FF; font-weight: bold">return</span> address;
+}
+</pre></div>
+
+
+<p>13) 为什么标准头文件都有类似以下的结构？</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800">#ifndef __INCvxWorksh</span>
+<span style="color: #008800">#define __INCvxWorksh</span>
+<span style="color: #008800">#ifdef __cplusplus</span>
+<span style="color: #AA22FF; font-weight: bold">extern</span> <span style="color: #BB4444">&quot;C&quot;</span> {
+<span style="color: #008800">#endif</span>
+<span style="color: #008800; font-style: italic">/*...*/</span>
+<span style="color: #008800">#ifdef __cplusplus</span>
+}
+<span style="color: #008800">#endif</span>
+<span style="color: #008800">#endif </span><span style="color: #008800; font-style: italic">/* __INCvxWorksh */</span><span style="color: #008800"></span>
+</pre></div>
+
+
+<p>头文件中的编译宏</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800">#ifndef　__INCvxWorksh</span>
+<span style="color: #008800">#define　__INCvxWorksh</span>
+<span style="color: #008800">#endif</span>
+</pre></div>
+
+
+<p>的作用是防止被重复引用。
+作为一种面向对象的语言，C++支持函数重载，而过程式语言C则不支持。函数被C++编译后在symbol库中的名字与C语言的不同。例如，假设某个函数的原型为：
+<code>void foo(int x, int y);</code>
+该函数被C编译器编译后在symbol库中的名字为<code>_foo</code>，而C++编译器则会产生像<code>_foo_int_int</code>之类的名字。<code>_foo_int_int</code>这样的名字包含了函数名和函数参数数量及类型信息，C++就是靠这种机制来实现函数重载的。
+为了实现C和C++的混合编程，C++提供了C连接交换指定符号extern &ldquo;C&rdquo;来解决名字匹配问题，函数声明前加上extern &ldquo;C&rdquo;后，则编译器就会按照C语言的方式将该函数编译为_foo，这样C语言中就可以调用C++的函数了。</p>
+<p>14) 编写一个函数，作用是把一个char组成的字符串循环右移n个。比如原来是“abcdefghi”如果n=2，移位后应该是“hiabcdefg” 函数头是这样的：
+//pStr是指向以&rsquo;\0&rsquo;结尾的字符串的指针
+//steps是要求移动的n</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>void LoopMove ( char * pStr, int steps )
+{
+ //请填充...
+}
+</pre></div>
+
+
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>void LoopMove(char *str, int steps)
+{
+int len = strlen(str);
+char tmp[MAXSIZE];
+step %= len;
+strcpy(tmp, str+len-steps);
+strcpy(tmp+steps, str);
+*(tmp+len)  = &#39;/0&#39;;
+strcpy(str, tmp);
+}
+</pre></div>
+
+
+<p>15) 编写wav文件结构体  <a href="https://www.nowcoder.com/ta/review-c/review?query=&amp;asc=true&amp;order=&amp;page=15">link</a></p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>typedef struct tagWaveFormat
+{
+ char cRiffFlag[4];
+ UIN32 nFileLen;
+ char cWaveFlag[4];
+ char cFmtFlag[4];
+ char cTransition[4];
+ UIN16 nFormatTag ;
+ UIN16 nChannels;
+ UIN16 nSamplesPerSec;
+ UIN32 nAvgBytesperSec;
+ UIN16 nBlockAlign;
+ UIN16 nBitNumPerSample;
+ char cDataFlag[4];
+ UIN16 nAudioLength;
+} WAVEFORMAT;
+</pre></div>
+
+
+<p>16) 编写类String的构造函数、析构函数和赋值函数，已知类String的原型为：</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">String</span>
+{
+ <span style="color: #AA22FF; font-weight: bold">public</span><span style="color: #666666">:</span>
+ String(<span style="color: #AA22FF; font-weight: bold">const</span> <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>str <span style="color: #666666">=</span> <span style="color: #AA22FF">NULL</span>); <span style="color: #008800; font-style: italic">// 普通构造函数</span>
+ String(<span style="color: #AA22FF; font-weight: bold">const</span> String <span style="color: #666666">&amp;</span>other); <span style="color: #008800; font-style: italic">// 拷贝构造函数</span>
+ <span style="color: #666666">~</span> String(<span style="color: #00BB00; font-weight: bold">void</span>); <span style="color: #008800; font-style: italic">// 析构函数</span>
+ String <span style="color: #666666">&amp;</span> <span style="color: #AA22FF; font-weight: bold">operator</span> <span style="color: #666666">=</span>(<span style="color: #AA22FF; font-weight: bold">const</span> String <span style="color: #666666">&amp;</span>other); <span style="color: #008800; font-style: italic">// 赋值函数</span>
+ <span style="color: #AA22FF; font-weight: bold">private</span><span style="color: #666666">:</span>
+ <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>m_data; <span style="color: #008800; font-style: italic">// 用于保存字符串</span>
+};
+</pre></div>
+
+
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">//普通构造函数</span>
+String<span style="color: #666666">::</span>String(<span style="color: #AA22FF; font-weight: bold">const</span> <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>str)
+{
+ <span style="color: #AA22FF; font-weight: bold">if</span>(str<span style="color: #666666">==</span><span style="color: #AA22FF">NULL</span>)
+ {
+ m_data <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #00BB00; font-weight: bold">char</span>[<span style="color: #666666">1</span>]; <span style="color: #008800; font-style: italic">// 得分点：对空字符串自动申请存放结束标志&#39;\0&#39;的空</span>
+ <span style="color: #008800; font-style: italic">//加分点：对m_data加NULL 判断</span>
+ <span style="color: #666666">*</span>m_data <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;\0&#39;</span>;
+ }
+ <span style="color: #AA22FF; font-weight: bold">else</span>
+ {
+ <span style="color: #00BB00; font-weight: bold">int</span> length <span style="color: #666666">=</span> strlen(str);
+ m_data <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #00BB00; font-weight: bold">char</span>[length<span style="color: #666666">+1</span>];
+ strcpy(m_data, str);
+ }
+}
+<span style="color: #008800; font-style: italic">// String的析构函数</span>
+String<span style="color: #666666">::~</span>String(<span style="color: #00BB00; font-weight: bold">void</span>)
+{
+ <span style="color: #AA22FF; font-weight: bold">delete</span> [] m_data; <span style="color: #008800; font-style: italic">// 或delete m_data;</span>
+}
+<span style="color: #008800; font-style: italic">//拷贝构造函数</span>
+String<span style="color: #666666">::</span>String(<span style="color: #AA22FF; font-weight: bold">const</span> String <span style="color: #666666">&amp;</span>other) 　　　<span style="color: #008800; font-style: italic">// 得分点：输入参数为const型</span>
+{
+ <span style="color: #00BB00; font-weight: bold">int</span> length <span style="color: #666666">=</span> strlen(other.m_data);
+ m_data <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #00BB00; font-weight: bold">char</span>[length<span style="color: #666666">+1</span>]; 　　　　
+ strcpy(m_data, other.m_data);
+}
+<span style="color: #008800; font-style: italic">//赋值函数</span>
+String <span style="color: #666666">&amp;</span> String<span style="color: #666666">::</span><span style="color: #AA22FF; font-weight: bold">operator</span> <span style="color: #666666">=</span>(<span style="color: #AA22FF; font-weight: bold">const</span> String <span style="color: #666666">&amp;</span>other) <span style="color: #008800; font-style: italic">// 得分点：输入参数为const型</span>
+{
+ <span style="color: #AA22FF; font-weight: bold">if</span>(<span style="color: #AA22FF; font-weight: bold">this</span> <span style="color: #666666">==</span> <span style="color: #666666">&amp;</span>other) 　　<span style="color: #008800; font-style: italic">//得分点：检查自赋值</span>
+ <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #666666">*</span><span style="color: #AA22FF; font-weight: bold">this</span>;
+ <span style="color: #AA22FF; font-weight: bold">delete</span> [] m_data; 　　　　<span style="color: #008800; font-style: italic">//得分点：释放原有的内存资源</span>
+ <span style="color: #00BB00; font-weight: bold">int</span> length <span style="color: #666666">=</span> strlen( other.m_data );
+ m_data <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #00BB00; font-weight: bold">char</span>[length<span style="color: #666666">+1</span>]; 　
+ strcpy( m_data, other.m_data );
+ <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #666666">*</span><span style="color: #AA22FF; font-weight: bold">this</span>; 　　　　　　　　<span style="color: #008800; font-style: italic">//得分点：返回本对象的引用</span>
+}
+</pre></div>
+
+
+<p>17) 请说出static和const关键字尽可能多的作用</p>
+<p>static强调变量重复使用同一份，以及在变量在函数体内、变量在模块内、函数体在模块内的作用域；
+const强调所修饰对象的不可更改，得到常量和常函数。</p>
+<p>18) 请写一个C函数，若处理器是<code>Big_endian</code>的，则返回0；若是<code>Little_endian</code>的，则返回1</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">int</span> <span style="color: #00A000">checkCPU</span>()
+{
+ {
+ <span style="color: #AA22FF; font-weight: bold">union</span> w
+ {
+ <span style="color: #00BB00; font-weight: bold">int</span> a;
+ <span style="color: #00BB00; font-weight: bold">char</span> b;
+ } c;
+ c.a <span style="color: #666666">=</span> <span style="color: #666666">1</span>;
+ <span style="color: #AA22FF; font-weight: bold">return</span> (c.b <span style="color: #666666">==</span> <span style="color: #666666">1</span>);
+ }
+}
+</pre></div>
+
+
+<p>小端(little_endian): 低地址存放低数据(pc) 大端(big_endian): 低地址存放高数据(手机,网络); union联合体共用内存区域，且一定从低地址开始存放数据(小端)
+如果将a赋值1且系统为小端模式，b的地址与a共享，b也应为1，反之则是大端模式</p>
+<p>19) 写一个函数返回1+2+3+…+n的值（假定结果不会超过长整型变量的范围）</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">int</span> <span style="color: #00A000">Sum</span>( <span style="color: #00BB00; font-weight: bold">int</span> n )
+{
+ <span style="color: #00BB00; font-weight: bold">long</span> sum <span style="color: #666666">=</span> <span style="color: #666666">0</span>;
+ <span style="color: #AA22FF; font-weight: bold">for</span>( <span style="color: #00BB00; font-weight: bold">int</span> i<span style="color: #666666">=1</span>; i<span style="color: #666666">&lt;=</span>n; i<span style="color: #666666">++</span> )
+ {
+ sum <span style="color: #666666">+=</span> i;
+ }
+ <span style="color: #AA22FF; font-weight: bold">return</span> sum;
+}
+</pre></div>
+
+
+<p>21)
+请说一下<code>C++</code>和C语言的区别
+设计思想上：
+<code>C++</code>是面向对象的语言，而C是面向过程的结构化编程语言
+语法上：
+<code>C++</code>具有封装、继承和多态三种特性
+<code>C++</code>相比C，增加多许多类型安全的功能，比如强制类型转换、<code>C++</code>支持范式编程，比如模板类、函数模板等`</p>
+<p>24)
+说一说<code>c++</code>中四种cast转换</p>
+<p><code>C++</code>中四种类型转换是：<code>static_cast, dynamic_cast, const_cast, reinterpret_cast</code>
+1、const_cast
+用于将const变量转为非const
+2、static_cast
+用于各种隐式转换，比如非const转const，void*转指针等, static_cast能用于多态向上转化，如果向下转能成功但是不安全，结果未知；
+3、dynamic_cast
+用于动态类型转换。只能用于含有虚函数的类，用于类层次间的向上和向下转化。只能转指针或引用。向下转化时，如果是非法的对于指针返回NULL，对于引用抛异常。要深入了解内部转换的原理。
+向上转换：指的是子类向基类的转换
+向下转换：指的是基类向子类的转换
+它通过判断在执行到该语句的时候变量的运行时类型和要转换的类型是否相同来判断是否能够进行向下转换。
+4、reinterpret_cast
+几乎什么都可以转，比如将int转指针，可能会出问题，尽量少用；
+5、为什么不使用C的强制转换？
+C的强制转换表面上看起来功能强大什么都能转，但是转化不够明确，不能进行错误检查，容易出错。</p>
+<p>25)
+请说一下C/C++ 中指针和引用的区别？
+1.指针有自己的一块空间，而引用只是一个别名；
+2.使用sizeof看一个指针的大小是4，而引用则是被引用对象的大小；
+3.指针可以被初始化为NULL，而引用必须被初始化且必须是一个已有对象 的引用；
+4.作为参数传递时，指针需要被解引用才可以对对象进行操作，而直接对引 用的修改都会改变引用所指向的对象；
+5.可以有const指针，但是没有const引用；
+6.指针在使用中可以指向其它对象，但是引用只能是一个对象的引用，不能 被改变；
+7.指针可以有多级指针（**p），而引用至于一级；
+8.指针和引用使用++运算符的意义不一样；
+9.如果返回动态内存分配的对象或者内存，必须使用指针，引用可能引起内存泄露。</p>
+
+
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="./archives.html">Archives</a></li>
+                            <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./authors.html">Authors</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="tencent://message/?uin=1049793871&Site=Sambow&Menu=yes" target="_blank">QQ</a></li>
+                            <li><a href="http://github.com/Rivarrl" target="_blank">GitHub</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>© blogname 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+        <!-- live2d -->
+        <script src="./js/L2Dwidget.min.js"></script>
+        <script src="./js/L2Dwidget.0.min.js"></script>
+        <script>
+            L2Dwidget.init({
+                "model":{
+                    "scale":1,"hHeadPos":0.5,"vHeadPos":0.618,
+                    "jsonPath": "./live2d-models/live2d-widget-model-tororo/assets/tororo.model.json"
+                },
+                "display":{
+                    "superSample":2,"width":100,"height":220,"position":"right","hOffset":-30,"vOffset":-200
+                },
+                "mobile":{
+                    "show":false,"scale":0.5
+                },
+                "react":{
+                    "opacityDefault":0.9,"opacityOnHover":0.2
+                }
+            });
+        </script>
+        <div id="live2d-widget">
+            <canvas id="live2dcanvas" width="200" height="440"
+            style="position: fixed; opacity: 1; right: 0px; bottom: 0; z-index: 99999; pointer-events: none;"></canvas>
+        </div>
+    </body>
+</html>

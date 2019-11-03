@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="秋招题复现（依图科技2019 - 算法） 四道题有三道都没ac，打击很大…复现一下 不保证对，先写下来以后和感兴趣的同学讨论 输入输出就不按照笔试的方式了，直接用函数输入了 题目1 - Ensemble 目前有一个二分类任务，已经有2个模型A B 对于一张图 A模型会输出两个值A0 A1 表示A模型认为这张图属于类别0的概率为A0，1的概率为A1 B和A相同...">
+        <meta name="keywords" content="Algorithm, Exam, Python3">
+        <link rel="icon" href="./favicon.ico">
+
+        <title>秋招题复现（依图科技2019 - 算法） - Rivarrl</title>
+
+        <!-- Stylesheets -->
+        <link href="./css/all.min.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('./images/background.jpg'); background-position: center; background-size: cover;">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="./"><img class="mr20" src="./images/logo.png" alt="logo">Rivarrl</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="./">Homepage</a>
+                                <a href="./categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">秋招题复现（依图科技2019 - 算法）</h1>
+                      <p class="header-date">By <a href="./author/rivarrl.html">Rivarrl</a>, 2019-10-30 20:02:00, modified 2019-11-02 23:40:00, in category <a href="./category/algorithm.html">Algorithm</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="./tag/algorithm.html">Algorithm</a>, <a href="./tag/exam.html">Exam</a>, <a href="./tag/python3.html">Python3</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <h3>秋招题复现（依图科技2019 - 算法）</h3>
+<blockquote>
+<p>四道题有三道都没ac，打击很大&hellip;复现一下
+不保证对，先写下来以后和感兴趣的同学讨论</p>
+</blockquote>
+<p>输入输出就不按照笔试的方式了，直接用函数输入了</p>
+<h4>题目1 - Ensemble</h4>
+<p>目前有一个二分类任务，已经有2个模型A B
+对于一张图 A模型会输出两个值A0 A1
+表示A模型认为这张图属于类别0的概率为A0，1的概率为A1
+B和A相同
+对于一张label为0的图而言，A0&gt;A1时，说明A模型预测正确，A0&lt;=A1时预测错误
+对于一张label为1的图而言，A0<A1时，说明A模型预测正确，A0>=A1时预测错误
+定义一个ensemble的权量x, 0&lt;=x&lt;=1</p>
+<p>定义C(x) 是A，B模型按照权重值为x,1-x的ensemble模型
+C(x)认为这张图是类别0的概率为<code>x * A0 + (1-x) * B0</code>
+C(x)认为这张图是类别1的概率为<code>x * A1 + (1-x) * B1</code></p>
+<p>如果x服从均匀分布
+求C(x)模型在这n张图片上做对的个数的数学期望</p>
+<p>分析：
+C(x)预测对这一事件包括C(x)和类别同0和同1两种
+同0时，需要让C(x)的1式减去C(x)的2式 &gt; 0；即<code>x*(A0-A1) + (1-x)*(B0-B1) &gt; 0</code>
+同1时，1式减2式小于0；即<code>x*(A0-A1) + (1-x)*(B0-B1) &lt; 0</code>
+结合label的数值可将两个不等式化为一个不等式：
+<code>(1-2*label)*x*(A0-A1) + (1-x)*(B0-B1) &gt; 0</code>
+求解上述不等式得：
+<code>z = (B1-B0) / (A0-A1+B1-B0)</code>
+<code>x &gt; z, label = 0时</code>
+<code>x &lt; z, label = 1时</code>
+z在0-1之间, x &gt; z的期望为1-z, x &lt; z的期望为z
+最后将每一行的期望求和</p>
+<blockquote>
+<p>注意求不等式 0不能作为分母 以及x的真实取值范围[0,1]</p>
+</blockquote>
+<p>代码：</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">yt_2_ensemble</span>(arr):
+    <span style="color: #008800; font-style: italic"># arr: label A0 A1 B0 B1</span>
+    res <span style="color: #666666">=</span> <span style="color: #666666">0.0</span>
+    <span style="color: #AA22FF; font-weight: bold">for</span> e <span style="color: #AA22FF; font-weight: bold">in</span> arr:
+        label, A0, A1, B0, B1 <span style="color: #666666">=</span> e
+        a, b <span style="color: #666666">=</span> B1 <span style="color: #666666">-</span> B0, A0 <span style="color: #666666">-</span> A1 <span style="color: #666666">+</span> B1 <span style="color: #666666">-</span> B0
+        <span style="color: #AA22FF; font-weight: bold">if</span> b <span style="color: #666666">==</span> <span style="color: #666666">0</span>: <span style="color: #AA22FF; font-weight: bold">continue</span>
+        n <span style="color: #666666">=</span> <span style="color: #AA22FF">min</span>(<span style="color: #666666">1</span>, <span style="color: #AA22FF">max</span>(a<span style="color: #666666">/</span>b, <span style="color: #666666">0</span>))
+        <span style="color: #AA22FF; font-weight: bold">if</span> (label <span style="color: #666666">==</span> <span style="color: #666666">0</span>) <span style="color: #666666">^</span> (b <span style="color: #666666">&lt;</span> <span style="color: #666666">0</span>):
+            res <span style="color: #666666">+=</span> <span style="color: #666666">1</span> <span style="color: #666666">-</span> n
+        <span style="color: #AA22FF; font-weight: bold">else</span>:
+            res <span style="color: #666666">+=</span> n
+    <span style="color: #AA22FF; font-weight: bold">return</span> res
+</pre></div>
+
+
+<h4>题目2 - Party</h4>
+<p>你是一个活动晚会的组织者，晚会总时长为t分钟，共有n个候选节目。
+每个候选节目有三个值，ai, bi, ci。ci表示这个节目会持续ci分钟。
+如果在第i个节目开始时，晚会已经进行了p分钟，那么参与晚会的成员对这个晚会的满意度会增加<code>ai + p * bi</code>。
+你需要在n个候选节目中挑选若干个，并安排在合适的时间，使得晚会满意度达到最大。
+要求两个节目时间不能重叠，且你可以在任意时间安排人员进行任意时长的休息（除节目进行时），而不会影响满意度。
+晚会开始的时候视为第0分钟。</p>
+<p>输入： 节目列表arr(ai, bi, ci)，晚会总时间t，节目总数n
+输出： 最大满意度</p>
+<p>例如：
+输入： arr = [[3, 2, 2], [2, 3, 4]], t=7, n=2
+输出： 18</p>
+<p>分析：
+总时长为t，从n个候选节目挑选若干使得满意度最大，无论挑选的节目总时长是否达到t，最后一个节目表演结束都要踩着晚会结束的时间点才会使得本次选择的满意度最大化。挑选问题相当于01背包问题，不过要从晚会结束时间t向前挑。
+状态转移方程：</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>dp[i][j]= \begin{cases} dp[i+1][j], &amp; j &lt; c[i] \\ max(dp[i][j], dp[i+1][j-c[i]] + (a[i] + b[i] * (j-c[i]))), &amp; j &gt;= c[i] \end{cases}
+</pre></div>
+
+
+<p>代码：</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">yt_3_party</span>(arr, t, n):
+    dp <span style="color: #666666">=</span> [[<span style="color: #666666">0</span>] <span style="color: #666666">*</span> (t<span style="color: #666666">+1</span>) <span style="color: #AA22FF; font-weight: bold">for</span> _ <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(n<span style="color: #666666">+1</span>)]
+    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(n<span style="color: #666666">-1</span>, <span style="color: #666666">-1</span>, <span style="color: #666666">-1</span>):
+        a, b, c <span style="color: #666666">=</span> arr[i]
+        <span style="color: #AA22FF; font-weight: bold">for</span> j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(t, <span style="color: #666666">-1</span>, <span style="color: #666666">-1</span>):
+            <span style="color: #AA22FF; font-weight: bold">if</span> j <span style="color: #666666">&lt;</span> c:
+                dp[i][j] <span style="color: #666666">=</span> dp[i<span style="color: #666666">+1</span>][j]
+            <span style="color: #AA22FF; font-weight: bold">else</span>:
+                dp[i][j] <span style="color: #666666">=</span> <span style="color: #AA22FF">max</span>(dp[i<span style="color: #666666">+1</span>][j], dp[i<span style="color: #666666">+1</span>][j<span style="color: #666666">-</span>c] <span style="color: #666666">+</span> a <span style="color: #666666">+</span> b <span style="color: #666666">*</span> (j <span style="color: #666666">-</span> c))
+    <span style="color: #AA22FF; font-weight: bold">return</span> dp[<span style="color: #666666">0</span>][t]
+</pre></div>
+
+
+<h4>题目3 - Beam Search</h4>
+<p>现在有一个长度为n的权重序列 W1, W2, &hellip;, Wn, 其中Wi表示第i时刻的权重分布, Wi可表示为Wi = (Wi1, Wi2, &hellip;, Wim)
+需要在这个权重序列上进行beam search
+beam search 是一个启发式搜索算法
+在给定beam size = n的情况下
+每一时刻， 维护可能最优的K条记录
+下一时刻， 得到可能最优的K*M条记录，保留其中最优的K条
+特别的，若中间步骤中出现重复权重值时，选取字典序较小的
+序列用A-Z表示，所以M值不会超过26</p>
+<p>输入：上述序列arr，n，m，k
+输出：结果列表</p>
+<p>例如：
+输入：arr = [[500, 500],[900, 100],[100, 900]], n=3, m=2, k=3
+输出：[&ldquo;AAB&rdquo;, &ldquo;BAB&rdquo;, &ldquo;AAA&rdquo;]</p>
+<p>分析：
+按照题目说的过程写即可，使用优先队列降低寻找k个最大值时的复杂度</p>
+<blockquote>
+<p>注意：字典序中, ascii码更大的排名更靠后</p>
+</blockquote>
+<p>代码：</p>
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">yt_4_beam_search</span>(arr, n, m, k):
+    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">strcmp</span>(s1, s2, i<span style="color: #666666">=0</span>):
+        <span style="color: #AA22FF; font-weight: bold">if</span> i <span style="color: #666666">==</span> <span style="color: #AA22FF">len</span>(s1): <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF">False</span>
+        <span style="color: #AA22FF; font-weight: bold">if</span> s1[i] <span style="color: #666666">==</span> s2[i]: <span style="color: #AA22FF; font-weight: bold">return</span> strcmp(s1, s2, i<span style="color: #666666">+1</span>)
+        <span style="color: #AA22FF; font-weight: bold">else</span>: <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF">ord</span>(s1[i]) <span style="color: #666666">&gt;</span> <span style="color: #AA22FF">ord</span>(s2[i]) <span style="color: #008800; font-style: italic"># 字典序 =&gt; ascii码值高的更小</span>
+
+    <span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">Beam</span>:
+        <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">__init__</span>(<span style="color: #AA22FF">self</span>, key, val):
+            <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>key <span style="color: #666666">=</span> key
+            <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>val <span style="color: #666666">=</span> val
+
+        <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">__lt__</span>(<span style="color: #AA22FF">self</span>, other):
+            <span style="color: #AA22FF; font-weight: bold">return</span> strcmp(<span style="color: #AA22FF">self</span><span style="color: #666666">.</span>key, other<span style="color: #666666">.</span>key) <span style="color: #AA22FF; font-weight: bold">if</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>val <span style="color: #666666">==</span> other<span style="color: #666666">.</span>val <span style="color: #AA22FF; font-weight: bold">else</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>val <span style="color: #666666">&lt;</span> other<span style="color: #666666">.</span>val
+
+    <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">heapq</span>
+    letter <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>
+    origin <span style="color: #666666">=</span> [Beam(letter[i], arr[<span style="color: #666666">0</span>][i]) <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(m)]
+    heapq<span style="color: #666666">.</span>heapify(origin)
+    status <span style="color: #666666">=</span> heapq<span style="color: #666666">.</span>nlargest(k, origin)
+    <span style="color: #AA22FF; font-weight: bold">print</span>([st<span style="color: #666666">.</span>key <span style="color: #AA22FF; font-weight: bold">for</span> st <span style="color: #AA22FF; font-weight: bold">in</span> status])
+    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(<span style="color: #666666">1</span>, n):
+        tmp <span style="color: #666666">=</span> []
+        <span style="color: #AA22FF; font-weight: bold">for</span> j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(m):
+            <span style="color: #AA22FF; font-weight: bold">for</span> st <span style="color: #AA22FF; font-weight: bold">in</span> status:
+                tmp<span style="color: #666666">.</span>append(Beam(st<span style="color: #666666">.</span>key <span style="color: #666666">+</span> letter[j], st<span style="color: #666666">.</span>val<span style="color: #666666">+</span>arr[i][j]))
+        heapq<span style="color: #666666">.</span>heapify(tmp)
+        status <span style="color: #666666">=</span> heapq<span style="color: #666666">.</span>nlargest(k, tmp)
+    <span style="color: #AA22FF; font-weight: bold">return</span> [st<span style="color: #666666">.</span>key <span style="color: #AA22FF; font-weight: bold">for</span> st <span style="color: #AA22FF; font-weight: bold">in</span> status]
+</pre></div>
+
+
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="./archives.html">Archives</a></li>
+                            <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./authors.html">Authors</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="tencent://message/?uin=1049793871&Site=Sambow&Menu=yes" target="_blank">QQ</a></li>
+                            <li><a href="http://github.com/Rivarrl" target="_blank">GitHub</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>© blogname 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+        <!-- live2d -->
+        <script src="./js/L2Dwidget.min.js"></script>
+        <script src="./js/L2Dwidget.0.min.js"></script>
+        <script>
+            L2Dwidget.init({
+                "model":{
+                    "scale":1,"hHeadPos":0.5,"vHeadPos":0.618,
+                    "jsonPath": "./live2d-models/live2d-widget-model-tororo/assets/tororo.model.json"
+                },
+                "display":{
+                    "superSample":2,"width":100,"height":220,"position":"right","hOffset":-30,"vOffset":-200
+                },
+                "mobile":{
+                    "show":false,"scale":0.5
+                },
+                "react":{
+                    "opacityDefault":0.9,"opacityOnHover":0.2
+                }
+            });
+        </script>
+        <div id="live2d-widget">
+            <canvas id="live2dcanvas" width="200" height="440"
+            style="position: fixed; opacity: 1; right: 0px; bottom: 0; z-index: 99999; pointer-events: none;"></canvas>
+        </div>
+    </body>
+</html>

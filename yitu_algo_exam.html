@@ -24,6 +24,21 @@
         <![endif]-->
 
 
+        <!-- mathjax config similar to math.stackexchange -->
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+                inlineMath: [ ['$', '$'] ],
+                displayMath: [ ['$$', '$$']],
+                processEscapes: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            messageStyle: "none",
+            "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     </head>
 
@@ -107,21 +122,20 @@ z在0-1之间, x &gt; z的期望为1-z, x &lt; z的期望为z
 <p>注意求不等式 0不能作为分母 以及x的真实取值范围[0,1]</p>
 </blockquote>
 <p>代码：</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">yt_2_ensemble</span>(arr):
-    <span style="color: #008800; font-style: italic"># arr: label A0 A1 B0 B1</span>
-    res <span style="color: #666666">=</span> <span style="color: #666666">0.0</span>
-    <span style="color: #AA22FF; font-weight: bold">for</span> e <span style="color: #AA22FF; font-weight: bold">in</span> arr:
-        label, A0, A1, B0, B1 <span style="color: #666666">=</span> e
-        a, b <span style="color: #666666">=</span> B1 <span style="color: #666666">-</span> B0, A0 <span style="color: #666666">-</span> A1 <span style="color: #666666">+</span> B1 <span style="color: #666666">-</span> B0
-        <span style="color: #AA22FF; font-weight: bold">if</span> b <span style="color: #666666">==</span> <span style="color: #666666">0</span>: <span style="color: #AA22FF; font-weight: bold">continue</span>
-        n <span style="color: #666666">=</span> <span style="color: #AA22FF">min</span>(<span style="color: #666666">1</span>, <span style="color: #AA22FF">max</span>(a<span style="color: #666666">/</span>b, <span style="color: #666666">0</span>))
-        <span style="color: #AA22FF; font-weight: bold">if</span> (label <span style="color: #666666">==</span> <span style="color: #666666">0</span>) <span style="color: #666666">^</span> (b <span style="color: #666666">&lt;</span> <span style="color: #666666">0</span>):
-            res <span style="color: #666666">+=</span> <span style="color: #666666">1</span> <span style="color: #666666">-</span> n
-        <span style="color: #AA22FF; font-weight: bold">else</span>:
-            res <span style="color: #666666">+=</span> n
-    <span style="color: #AA22FF; font-weight: bold">return</span> res
-</pre></div>
-
+<pre><code class="py">def yt_2_ensemble(arr):
+    # arr: label A0 A1 B0 B1
+    res = 0.0
+    for e in arr:
+        label, A0, A1, B0, B1 = e
+        a, b = B1 - B0, A0 - A1 + B1 - B0
+        if b == 0: continue
+        n = min(1, max(a/b, 0))
+        if (label == 0) ^ (b &lt; 0):
+            res += 1 - n
+        else:
+            res += n
+    return res
+</code></pre>
 
 <h4>题目2 - Party</h4>
 <p>你是一个活动晚会的组织者，晚会总时长为t分钟，共有n个候选节目。
@@ -137,24 +151,26 @@ z在0-1之间, x &gt; z的期望为1-z, x &lt; z的期望为z
 输出： 18</p>
 <p>分析：
 总时长为t，从n个候选节目挑选若干使得满意度最大，无论挑选的节目总时长是否达到t，最后一个节目表演结束都要踩着晚会结束的时间点才会使得本次选择的满意度最大化。挑选问题相当于01背包问题，不过要从晚会结束时间t向前挑。
-状态转移方程：</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>dp[i][j]= \begin{cases} dp[i+1][j], &amp; j &lt; c[i] \\ max(dp[i][j], dp[i+1][j-c[i]] + (a[i] + b[i] * (j-c[i]))), &amp; j &gt;= c[i] \end{cases}
-</pre></div>
-
-
+状态转移方程：
+$$
+dp[i][j] =
+\begin{cases}
+dp[i+1][j], &amp; j &lt; c[i] \\
+max(dp[i][j], dp[i+1][j-c[i]] + (a[i] + b[i] * (j-c[i]))), &amp; j &gt;= c[i]
+\end{cases}
+$$</p>
 <p>代码：</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">yt_3_party</span>(arr, t, n):
-    dp <span style="color: #666666">=</span> [[<span style="color: #666666">0</span>] <span style="color: #666666">*</span> (t<span style="color: #666666">+1</span>) <span style="color: #AA22FF; font-weight: bold">for</span> _ <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(n<span style="color: #666666">+1</span>)]
-    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(n<span style="color: #666666">-1</span>, <span style="color: #666666">-1</span>, <span style="color: #666666">-1</span>):
-        a, b, c <span style="color: #666666">=</span> arr[i]
-        <span style="color: #AA22FF; font-weight: bold">for</span> j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(t, <span style="color: #666666">-1</span>, <span style="color: #666666">-1</span>):
-            <span style="color: #AA22FF; font-weight: bold">if</span> j <span style="color: #666666">&lt;</span> c:
-                dp[i][j] <span style="color: #666666">=</span> dp[i<span style="color: #666666">+1</span>][j]
-            <span style="color: #AA22FF; font-weight: bold">else</span>:
-                dp[i][j] <span style="color: #666666">=</span> <span style="color: #AA22FF">max</span>(dp[i<span style="color: #666666">+1</span>][j], dp[i<span style="color: #666666">+1</span>][j<span style="color: #666666">-</span>c] <span style="color: #666666">+</span> a <span style="color: #666666">+</span> b <span style="color: #666666">*</span> (j <span style="color: #666666">-</span> c))
-    <span style="color: #AA22FF; font-weight: bold">return</span> dp[<span style="color: #666666">0</span>][t]
-</pre></div>
-
+<pre><code class="py">def yt_3_party(arr, t, n):
+    dp = [[0] * (t+1) for _ in range(n+1)]
+    for i in range(n-1, -1, -1):
+        a, b, c = arr[i]
+        for j in range(t, -1, -1):
+            if j &lt; c:
+                dp[i][j] = dp[i+1][j]
+            else:
+                dp[i][j] = max(dp[i+1][j], dp[i+1][j-c] + a + b * (j - c))
+    return dp[0][t]
+</code></pre>
 
 <h4>题目3 - Beam Search</h4>
 <p>现在有一个长度为n的权重序列 W1, W2, &hellip;, Wn, 其中Wi表示第i时刻的权重分布, Wi可表示为Wi = (Wi1, Wi2, &hellip;, Wim)
@@ -176,35 +192,35 @@ beam search 是一个启发式搜索算法
 <p>注意：字典序中, ascii码更大的排名更靠后</p>
 </blockquote>
 <p>代码：</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">yt_4_beam_search</span>(arr, n, m, k):
-    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">strcmp</span>(s1, s2, i<span style="color: #666666">=0</span>):
-        <span style="color: #AA22FF; font-weight: bold">if</span> i <span style="color: #666666">==</span> <span style="color: #AA22FF">len</span>(s1): <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF">False</span>
-        <span style="color: #AA22FF; font-weight: bold">if</span> s1[i] <span style="color: #666666">==</span> s2[i]: <span style="color: #AA22FF; font-weight: bold">return</span> strcmp(s1, s2, i<span style="color: #666666">+1</span>)
-        <span style="color: #AA22FF; font-weight: bold">else</span>: <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #AA22FF">ord</span>(s1[i]) <span style="color: #666666">&gt;</span> <span style="color: #AA22FF">ord</span>(s2[i]) <span style="color: #008800; font-style: italic"># 字典序 =&gt; ascii码值高的更小</span>
+<pre><code class="py">def yt_4_beam_search(arr, n, m, k):
+    def strcmp(s1, s2, i=0):
+        if i == len(s1): return False
+        if s1[i] == s2[i]: return strcmp(s1, s2, i+1)
+        else: return ord(s1[i]) &gt; ord(s2[i]) # 字典序 =&gt; ascii码值高的更小
 
-    <span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">Beam</span>:
-        <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">__init__</span>(<span style="color: #AA22FF">self</span>, key, val):
-            <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>key <span style="color: #666666">=</span> key
-            <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>val <span style="color: #666666">=</span> val
+    class Beam:
+        def __init__(self, key, val):
+            self.key = key
+            self.val = val
 
-        <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">__lt__</span>(<span style="color: #AA22FF">self</span>, other):
-            <span style="color: #AA22FF; font-weight: bold">return</span> strcmp(<span style="color: #AA22FF">self</span><span style="color: #666666">.</span>key, other<span style="color: #666666">.</span>key) <span style="color: #AA22FF; font-weight: bold">if</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>val <span style="color: #666666">==</span> other<span style="color: #666666">.</span>val <span style="color: #AA22FF; font-weight: bold">else</span> <span style="color: #AA22FF">self</span><span style="color: #666666">.</span>val <span style="color: #666666">&lt;</span> other<span style="color: #666666">.</span>val
+        def __lt__(self, other):
+            return strcmp(self.key, other.key) if self.val == other.val else self.val &lt; other.val
 
-    <span style="color: #AA22FF; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">heapq</span>
-    letter <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>
-    origin <span style="color: #666666">=</span> [Beam(letter[i], arr[<span style="color: #666666">0</span>][i]) <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(m)]
-    heapq<span style="color: #666666">.</span>heapify(origin)
-    status <span style="color: #666666">=</span> heapq<span style="color: #666666">.</span>nlargest(k, origin)
-    <span style="color: #AA22FF; font-weight: bold">print</span>([st<span style="color: #666666">.</span>key <span style="color: #AA22FF; font-weight: bold">for</span> st <span style="color: #AA22FF; font-weight: bold">in</span> status])
-    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(<span style="color: #666666">1</span>, n):
-        tmp <span style="color: #666666">=</span> []
-        <span style="color: #AA22FF; font-weight: bold">for</span> j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(m):
-            <span style="color: #AA22FF; font-weight: bold">for</span> st <span style="color: #AA22FF; font-weight: bold">in</span> status:
-                tmp<span style="color: #666666">.</span>append(Beam(st<span style="color: #666666">.</span>key <span style="color: #666666">+</span> letter[j], st<span style="color: #666666">.</span>val<span style="color: #666666">+</span>arr[i][j]))
-        heapq<span style="color: #666666">.</span>heapify(tmp)
-        status <span style="color: #666666">=</span> heapq<span style="color: #666666">.</span>nlargest(k, tmp)
-    <span style="color: #AA22FF; font-weight: bold">return</span> [st<span style="color: #666666">.</span>key <span style="color: #AA22FF; font-weight: bold">for</span> st <span style="color: #AA22FF; font-weight: bold">in</span> status]
-</pre></div>
+    import heapq
+    letter = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;
+    origin = [Beam(letter[i], arr[0][i]) for i in range(m)]
+    heapq.heapify(origin)
+    status = heapq.nlargest(k, origin)
+    print([st.key for st in status])
+    for i in range(1, n):
+        tmp = []
+        for j in range(m):
+            for st in status:
+                tmp.append(Beam(st.key + letter[j], st.val+arr[i][j]))
+        heapq.heapify(tmp)
+        status = heapq.nlargest(k, tmp)
+    return [st.key for st in status]
+</code></pre>
 
 
         

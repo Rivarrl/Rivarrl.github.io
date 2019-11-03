@@ -24,6 +24,21 @@
         <![endif]-->
 
 
+        <!-- mathjax config similar to math.stackexchange -->
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+                inlineMath: [ ['$', '$'] ],
+                displayMath: [ ['$$', '$$']],
+                processEscapes: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            messageStyle: "none",
+            "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     </head>
 
@@ -86,261 +101,250 @@
 <li>计数排序</li>
 </ul>
 <p>交换操作</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 交换</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">swap</span>(arr, i, j):
-    arr[i], arr[j] <span style="color: #666666">=</span> arr[j], arr[i]
-</pre></div>
-
+<pre><code class="py"># 交换
+def swap(arr, i, j):
+    arr[i], arr[j] = arr[j], arr[i]
+</code></pre>
 
 <p>冒泡排序</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 冒泡排序</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">bubble_sort</span>(arr):
-    n <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr)
-    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(n):
-        <span style="color: #AA22FF; font-weight: bold">for</span> j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(i<span style="color: #666666">+1</span>, n):
-            <span style="color: #AA22FF; font-weight: bold">if</span> arr[i] <span style="color: #666666">&gt;</span> arr[j]:
+<pre><code class="py"># 冒泡排序
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(i+1, n):
+            if arr[i] &gt; arr[j]:
                 swap(arr, i, j)
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
-</pre></div>
-
+    return arr
+</code></pre>
 
 <p>选择排序</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 选择排序</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">selection_sort</span>(arr):
-    n <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr)
-    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(n):
-        k <span style="color: #666666">=</span> i
-        <span style="color: #AA22FF; font-weight: bold">for</span> j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(i<span style="color: #666666">+1</span>, n):
-            <span style="color: #AA22FF; font-weight: bold">if</span> arr[j] <span style="color: #666666">&lt;</span> arr[k]:
-                k <span style="color: #666666">=</span> j
+<pre><code class="py"># 选择排序
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        k = i
+        for j in range(i+1, n):
+            if arr[j] &lt; arr[k]:
+                k = j
         swap(arr, i, k)
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
-</pre></div>
-
+    return arr
+</code></pre>
 
 <p>插入排序</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 插入排序1</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">insertion_sort</span>(arr):
-    n <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr)
-    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(<span style="color: #666666">1</span>, n):
-        j, base <span style="color: #666666">=</span> i, arr[i]
-        <span style="color: #AA22FF; font-weight: bold">while</span> j <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span> <span style="color: #AA22FF; font-weight: bold">and</span> base <span style="color: #666666">&lt;</span> arr[j<span style="color: #666666">-1</span>]:
-            arr[j] <span style="color: #666666">=</span> arr[j<span style="color: #666666">-1</span>]
-            j <span style="color: #666666">-=</span> <span style="color: #666666">1</span>
-        arr[j] <span style="color: #666666">=</span> base
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
+<pre><code class="py"># 插入排序1
+def insertion_sort(arr):
+    n = len(arr)
+    for i in range(1, n):
+        j, base = i, arr[i]
+        while j &gt; 0 and base &lt; arr[j-1]:
+            arr[j] = arr[j-1]
+            j -= 1
+        arr[j] = base
+    return arr
 
-<span style="color: #008800; font-style: italic"># 插入排序2</span>
-<span style="color: #008800; font-style: italic"># 1的简化版</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">insertion_sort2</span>(arr):
-    n <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr)
-    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(<span style="color: #666666">1</span>, n):
-        j <span style="color: #666666">=</span> i
-        <span style="color: #AA22FF; font-weight: bold">while</span> j <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span> <span style="color: #AA22FF; font-weight: bold">and</span> arr[j] <span style="color: #666666">&lt;</span> arr[j<span style="color: #666666">-1</span>]:
-            swap(arr, j, j<span style="color: #666666">-1</span>)
-            j <span style="color: #666666">-=</span> <span style="color: #666666">1</span>
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
-</pre></div>
-
+# 插入排序2
+# 1的简化版
+def insertion_sort2(arr):
+    n = len(arr)
+    for i in range(1, n):
+        j = i
+        while j &gt; 0 and arr[j] &lt; arr[j-1]:
+            swap(arr, j, j-1)
+            j -= 1
+    return arr
+</code></pre>
 
 <p>希尔排序</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 希尔排序</span>
-<span style="color: #008800; font-style: italic"># 带步长的插入排序, 对比插入排序2</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">shell_sort</span>(arr):
-    n <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr)
-    h <span style="color: #666666">=</span> <span style="color: #666666">1</span>
-    <span style="color: #AA22FF; font-weight: bold">while</span> h <span style="color: #666666">&lt;</span> n<span style="color: #666666">//3</span>: h <span style="color: #666666">=</span> h <span style="color: #666666">*</span> <span style="color: #666666">3</span> <span style="color: #666666">+</span> <span style="color: #666666">1</span>
-    <span style="color: #AA22FF; font-weight: bold">while</span> h <span style="color: #666666">&gt;=</span> <span style="color: #666666">1</span>:
-        <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(<span style="color: #666666">1</span>, n):
-            j <span style="color: #666666">=</span> i
-            <span style="color: #AA22FF; font-weight: bold">while</span> j <span style="color: #666666">&gt;=</span> h <span style="color: #AA22FF; font-weight: bold">and</span> arr[j] <span style="color: #666666">&lt;</span> arr[j<span style="color: #666666">-</span>h]:
-                swap(arr, j, j<span style="color: #666666">-</span>h)
-                j <span style="color: #666666">-=</span> h
-        h <span style="color: #666666">//=</span> <span style="color: #666666">3</span>
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
-</pre></div>
-
+<pre><code class="py"># 希尔排序
+# 带步长的插入排序, 对比插入排序2
+def shell_sort(arr):
+    n = len(arr)
+    h = 1
+    while h &lt; n//3: h = h * 3 + 1
+    while h &gt;= 1:
+        for i in range(1, n):
+            j = i
+            while j &gt;= h and arr[j] &lt; arr[j-h]:
+                swap(arr, j, j-h)
+                j -= h
+        h //= 3
+    return arr
+</code></pre>
 
 <p>快速排序</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 快速排序</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">quick_sort</span>(arr):
-    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">_quick_sort</span>(arr, l, r):
-        <span style="color: #AA22FF; font-weight: bold">if</span> l <span style="color: #666666">&gt;=</span> r: <span style="color: #AA22FF; font-weight: bold">return</span>
-        i, j, base <span style="color: #666666">=</span> l, r, arr[l]
-        <span style="color: #AA22FF; font-weight: bold">while</span> i <span style="color: #666666">&lt;</span> j:
-            <span style="color: #AA22FF; font-weight: bold">while</span> i <span style="color: #666666">&lt;</span> j <span style="color: #AA22FF; font-weight: bold">and</span> arr[j] <span style="color: #666666">&gt;=</span> base:
-                j <span style="color: #666666">-=</span> <span style="color: #666666">1</span>
-            <span style="color: #AA22FF; font-weight: bold">while</span> i <span style="color: #666666">&lt;</span> j <span style="color: #AA22FF; font-weight: bold">and</span> arr[i] <span style="color: #666666">&lt;=</span> base:
-                i <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
+<pre><code class="py"># 快速排序
+def quick_sort(arr):
+    def _quick_sort(arr, l, r):
+        if l &gt;= r: return
+        i, j, base = l, r, arr[l]
+        while i &lt; j:
+            while i &lt; j and arr[j] &gt;= base:
+                j -= 1
+            while i &lt; j and arr[i] &lt;= base:
+                i += 1
             swap(arr, i, j)
         swap(arr, l, j)
         _quick_sort(arr, l, i)
-        _quick_sort(arr, i<span style="color: #666666">+1</span>, r)
-    _quick_sort(arr, <span style="color: #666666">0</span>, <span style="color: #AA22FF">len</span>(arr) <span style="color: #666666">-</span> <span style="color: #666666">1</span>)
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
-</pre></div>
-
+        _quick_sort(arr, i+1, r)
+    _quick_sort(arr, 0, len(arr) - 1)
+    return arr
+</code></pre>
 
 <p>归并排序</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 归并排序</span>
-<span style="color: #008800; font-style: italic"># 1: 自顶向下  2:自底向上</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">merge_sort</span>(arr, <span style="color: #AA22FF">type</span><span style="color: #666666">=1</span>):
-    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">_merge</span>(arr, l, mid, r):
-        i, j <span style="color: #666666">=</span> l, mid <span style="color: #666666">+</span> <span style="color: #666666">1</span>
-        <span style="color: #AA22FF; font-weight: bold">for</span> k <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(l, r <span style="color: #666666">+</span> <span style="color: #666666">1</span>):
-            tmp[k] <span style="color: #666666">=</span> arr[k]
-        <span style="color: #AA22FF; font-weight: bold">for</span> k <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(l, r <span style="color: #666666">+</span> <span style="color: #666666">1</span>):
-            <span style="color: #AA22FF; font-weight: bold">if</span> i <span style="color: #666666">&gt;</span> mid:
-                arr[k] <span style="color: #666666">=</span> tmp[j]
-                j <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
-            <span style="color: #AA22FF; font-weight: bold">elif</span> j <span style="color: #666666">&gt;</span> r:
-                arr[k] <span style="color: #666666">=</span> tmp[i]
-                i <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
-            <span style="color: #AA22FF; font-weight: bold">elif</span> tmp[j] <span style="color: #666666">&lt;</span> tmp[i]:
-                arr[k] <span style="color: #666666">=</span> tmp[j]
-                j <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
-            <span style="color: #AA22FF; font-weight: bold">else</span>:
-                arr[k] <span style="color: #666666">=</span> tmp[i]
-                i <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
-    <span style="color: #008800; font-style: italic"># 自顶向下</span>
-    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">_sort</span>(arr, l, r):
-        <span style="color: #AA22FF; font-weight: bold">if</span> l <span style="color: #666666">&gt;=</span> r: <span style="color: #AA22FF; font-weight: bold">return</span>
-        mid <span style="color: #666666">=</span> l <span style="color: #666666">+</span> (r <span style="color: #666666">-</span> l) <span style="color: #666666">//</span> <span style="color: #666666">2</span>
+<pre><code class="py"># 归并排序
+# 1: 自顶向下  2:自底向上
+def merge_sort(arr, type=1):
+    def _merge(arr, l, mid, r):
+        i, j = l, mid + 1
+        for k in range(l, r + 1):
+            tmp[k] = arr[k]
+        for k in range(l, r + 1):
+            if i &gt; mid:
+                arr[k] = tmp[j]
+                j += 1
+            elif j &gt; r:
+                arr[k] = tmp[i]
+                i += 1
+            elif tmp[j] &lt; tmp[i]:
+                arr[k] = tmp[j]
+                j += 1
+            else:
+                arr[k] = tmp[i]
+                i += 1
+    # 自顶向下
+    def _sort(arr, l, r):
+        if l &gt;= r: return
+        mid = l + (r - l) // 2
         _sort(arr, l, mid)
-        _sort(arr, mid <span style="color: #666666">+</span> <span style="color: #666666">1</span>, r)
+        _sort(arr, mid + 1, r)
         _merge(arr, l, mid, r)
-    <span style="color: #008800; font-style: italic"># 自底向上</span>
-    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">_sort_bottom_up</span>(arr):
-        n, step <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr), <span style="color: #666666">1</span>
-        <span style="color: #AA22FF; font-weight: bold">while</span> step <span style="color: #666666">&lt;</span> n:
-            l <span style="color: #666666">=</span> <span style="color: #666666">0</span>
-            <span style="color: #AA22FF; font-weight: bold">while</span> l <span style="color: #666666">&lt;</span> n:
-                _merge(arr, l, l <span style="color: #666666">+</span> step <span style="color: #666666">-</span> <span style="color: #666666">1</span>, <span style="color: #AA22FF">min</span>(l <span style="color: #666666">+</span> step <span style="color: #666666">+</span> step <span style="color: #666666">-</span> <span style="color: #666666">1</span>, n<span style="color: #666666">-1</span>))
-                l <span style="color: #666666">+=</span> step <span style="color: #666666">+</span> step
-            step <span style="color: #666666">+=</span> step
-    n <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr)
-    tmp <span style="color: #666666">=</span> [<span style="color: #666666">0</span>] <span style="color: #666666">*</span> n
-    <span style="color: #AA22FF; font-weight: bold">if</span> <span style="color: #AA22FF">type</span> <span style="color: #666666">==</span> <span style="color: #666666">1</span>:
-        _sort(arr, <span style="color: #666666">0</span>, n<span style="color: #666666">-1</span>)
-    <span style="color: #AA22FF; font-weight: bold">else</span>:
+    # 自底向上
+    def _sort_bottom_up(arr):
+        n, step = len(arr), 1
+        while step &lt; n:
+            l = 0
+            while l &lt; n:
+                _merge(arr, l, l + step - 1, min(l + step + step - 1, n-1))
+                l += step + step
+            step += step
+    n = len(arr)
+    tmp = [0] * n
+    if type == 1:
+        _sort(arr, 0, n-1)
+    else:
         _sort_bottom_up(arr)
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
-</pre></div>
-
+    return arr
+</code></pre>
 
 <p>堆排序</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 堆排序</span>
-<span style="color: #008800; font-style: italic"># 每次要将根节点与末尾交换, 所以正序排序建大顶堆, 逆序排序建小顶堆</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">heap_sort</span>(arr):
-    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">_build_max_heap</span>(arr):
-        <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(<span style="color: #AA22FF">len</span>(arr)<span style="color: #666666">//2</span>, <span style="color: #666666">-1</span>, <span style="color: #666666">-1</span>):
+<pre><code class="py"># 堆排序
+# 每次要将根节点与末尾交换, 所以正序排序建大顶堆, 逆序排序建小顶堆
+def heap_sort(arr):
+    def _build_max_heap(arr):
+        for i in range(len(arr)//2, -1, -1):
             _heapify(arr, i)
 
-    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">_heapify</span>(arr, i):
-        l <span style="color: #666666">=</span> i <span style="color: #666666">*</span> <span style="color: #666666">2</span> <span style="color: #666666">+</span> <span style="color: #666666">1</span>
-        r <span style="color: #666666">=</span> l <span style="color: #666666">+</span> <span style="color: #666666">1</span>
-        p <span style="color: #666666">=</span> i
-        <span style="color: #AA22FF; font-weight: bold">if</span> l <span style="color: #666666">&lt;</span> N <span style="color: #AA22FF; font-weight: bold">and</span> arr[p] <span style="color: #666666">&lt;</span> arr[l]:
-            p <span style="color: #666666">=</span> l
-        <span style="color: #AA22FF; font-weight: bold">if</span> r <span style="color: #666666">&lt;</span> N <span style="color: #AA22FF; font-weight: bold">and</span> arr[p] <span style="color: #666666">&lt;</span> arr[r]:
-            p <span style="color: #666666">=</span> r
-        <span style="color: #AA22FF; font-weight: bold">if</span> p <span style="color: #666666">!=</span> i:
+    def _heapify(arr, i):
+        l = i * 2 + 1
+        r = l + 1
+        p = i
+        if l &lt; N and arr[p] &lt; arr[l]:
+            p = l
+        if r &lt; N and arr[p] &lt; arr[r]:
+            p = r
+        if p != i:
             swap(arr, i, p)
             _heapify(arr, p)
 
-    N <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr)
+    N = len(arr)
     _build_max_heap(arr)
-    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(<span style="color: #AA22FF">len</span>(arr)<span style="color: #666666">-1</span>, <span style="color: #666666">0</span>, <span style="color: #666666">-1</span>):
-        swap(arr, <span style="color: #666666">0</span>, i)
-        N <span style="color: #666666">-=</span> <span style="color: #666666">1</span>
-        _heapify(arr, <span style="color: #666666">0</span>)
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
-</pre></div>
-
+    for i in range(len(arr)-1, 0, -1):
+        swap(arr, 0, i)
+        N -= 1
+        _heapify(arr, 0)
+    return arr
+</code></pre>
 
 <p>桶排序</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 桶排序</span>
-<span style="color: #008800; font-style: italic"># 分配空间少的计数排序桶变为二维数组,每个桶存储多个元素.</span>
-<span style="color: #008800; font-style: italic"># 计数排序也就是单桶大小为1时的桶排序</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">bucket_sort</span>(arr):
-    _MIN, _MAX <span style="color: #666666">=</span> get_min_max(arr)
-    n <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr)
-    k <span style="color: #666666">=</span> (_MAX <span style="color: #666666">-</span> _MIN) <span style="color: #666666">//</span> <span style="color: #666666">3</span> <span style="color: #666666">+</span> <span style="color: #666666">1</span>
-    tmp <span style="color: #666666">=</span> [[] <span style="color: #AA22FF; font-weight: bold">for</span> _ <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(k)]
-    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(n):
-        x <span style="color: #666666">=</span> (arr[i] <span style="color: #666666">-</span> _MIN) <span style="color: #666666">//</span> <span style="color: #666666">3</span>
-        tmp[x]<span style="color: #666666">.</span>append(arr[i])
-        <span style="color: #AA22FF; font-weight: bold">for</span> j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(<span style="color: #AA22FF">len</span>(tmp[x])<span style="color: #666666">-1</span>, <span style="color: #666666">0</span>, <span style="color: #666666">-1</span>):
-            <span style="color: #AA22FF; font-weight: bold">if</span> tmp[x][j] <span style="color: #666666">&lt;</span> tmp[x][j<span style="color: #666666">-1</span>]:
-                swap(tmp[x], j, j<span style="color: #666666">-1</span>)
-            <span style="color: #AA22FF; font-weight: bold">else</span>:
-                <span style="color: #AA22FF; font-weight: bold">break</span>
-    i <span style="color: #666666">=</span> <span style="color: #666666">0</span>
-    <span style="color: #AA22FF; font-weight: bold">for</span> x <span style="color: #AA22FF; font-weight: bold">in</span> tmp:
-        <span style="color: #AA22FF; font-weight: bold">for</span> e <span style="color: #AA22FF; font-weight: bold">in</span> x:
-            arr[i] <span style="color: #666666">=</span> e
-            i <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
-</pre></div>
-
+<pre><code class="py"># 桶排序
+# 分配空间少的计数排序桶变为二维数组,每个桶存储多个元素.
+# 计数排序也就是单桶大小为1时的桶排序
+def bucket_sort(arr):
+    _MIN, _MAX = get_min_max(arr)
+    n = len(arr)
+    k = (_MAX - _MIN) // 3 + 1
+    tmp = [[] for _ in range(k)]
+    for i in range(n):
+        x = (arr[i] - _MIN) // 3
+        tmp[x].append(arr[i])
+        for j in range(len(tmp[x])-1, 0, -1):
+            if tmp[x][j] &lt; tmp[x][j-1]:
+                swap(tmp[x], j, j-1)
+            else:
+                break
+    i = 0
+    for x in tmp:
+        for e in x:
+            arr[i] = e
+            i += 1
+    return arr
+</code></pre>
 
 <p>基数排序</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 基数排序</span>
-<span style="color: #008800; font-style: italic"># 基数排序适用于数组中的数值不大的非负整数情况, 原理是按数值的每一位排序装桶</span>
-<span style="color: #008800; font-style: italic"># 可以分为低位优先(LSD)和高位优先(MSD)</span>
-<span style="color: #008800; font-style: italic"># 代码中使用的LSD</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">radix_sort</span>(arr):
-    get_digit <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">lambda</span> x, d: (x<span style="color: #666666">//</span>d) <span style="color: #666666">%</span> <span style="color: #666666">10</span>
-    max_num <span style="color: #666666">=</span> <span style="color: #AA22FF">max</span>(arr)
-    _MAX_DIGIT <span style="color: #666666">=</span> <span style="color: #666666">1</span>
-    <span style="color: #AA22FF; font-weight: bold">while</span> max_num <span style="color: #666666">&gt;=</span> <span style="color: #666666">10</span>:
-        max_num <span style="color: #666666">//=</span> <span style="color: #666666">10</span>
-        _MAX_DIGIT <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
-    n <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr)
-    digit <span style="color: #666666">=</span> <span style="color: #666666">1</span>
-    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(_MAX_DIGIT):
-        pos <span style="color: #666666">=</span> [<span style="color: #666666">0</span>] <span style="color: #666666">*</span> <span style="color: #666666">10</span>
-        tmp <span style="color: #666666">=</span> [x <span style="color: #AA22FF; font-weight: bold">for</span> x <span style="color: #AA22FF; font-weight: bold">in</span> arr]
-        <span style="color: #AA22FF; font-weight: bold">for</span> x <span style="color: #AA22FF; font-weight: bold">in</span> tmp:
-            k <span style="color: #666666">=</span> get_digit(x, digit)
-            pos[k] <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
-        <span style="color: #AA22FF; font-weight: bold">for</span> j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(<span style="color: #666666">1</span>, <span style="color: #666666">10</span>):
-            pos[j] <span style="color: #666666">+=</span> pos[j<span style="color: #666666">-1</span>]
-        <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(n<span style="color: #666666">-1</span>, <span style="color: #666666">-1</span>, <span style="color: #666666">-1</span>):
-            base <span style="color: #666666">=</span> tmp[i]
-            k <span style="color: #666666">=</span> get_digit(base, digit)
-            arr[pos[k] <span style="color: #666666">-</span> <span style="color: #666666">1</span>] <span style="color: #666666">=</span> base
-            pos[k] <span style="color: #666666">-=</span> <span style="color: #666666">1</span>
-        digit <span style="color: #666666">*=</span> <span style="color: #666666">10</span>
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
-</pre></div>
-
+<pre><code class="py"># 基数排序
+# 基数排序适用于数组中的数值不大的非负整数情况, 原理是按数值的每一位排序装桶
+# 可以分为低位优先(LSD)和高位优先(MSD)
+# 代码中使用的LSD
+def radix_sort(arr):
+    get_digit = lambda x, d: (x//d) % 10
+    max_num = max(arr)
+    _MAX_DIGIT = 1
+    while max_num &gt;= 10:
+        max_num //= 10
+        _MAX_DIGIT += 1
+    n = len(arr)
+    digit = 1
+    for i in range(_MAX_DIGIT):
+        pos = [0] * 10
+        tmp = [x for x in arr]
+        for x in tmp:
+            k = get_digit(x, digit)
+            pos[k] += 1
+        for j in range(1, 10):
+            pos[j] += pos[j-1]
+        for i in range(n-1, -1, -1):
+            base = tmp[i]
+            k = get_digit(base, digit)
+            arr[pos[k] - 1] = base
+            pos[k] -= 1
+        digit *= 10
+    return arr
+</code></pre>
 
 <p>计数排序</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic"># 计数排序</span>
-<span style="color: #008800; font-style: italic"># 只能排整型数组</span>
-<span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">count_sort</span>(arr):
-    <span style="color: #AA22FF; font-weight: bold">def</span> <span style="color: #00A000">get_min_max</span>(arr):
-        _MIN, _MAX <span style="color: #666666">=</span> <span style="color: #AA22FF">float</span>(<span style="color: #BB4444">&quot;inf&quot;</span>), <span style="color: #666666">-</span><span style="color: #AA22FF">float</span>(<span style="color: #BB4444">&quot;inf&quot;</span>)
-        <span style="color: #AA22FF; font-weight: bold">for</span> x <span style="color: #AA22FF; font-weight: bold">in</span> arr:
-            <span style="color: #AA22FF; font-weight: bold">if</span> x <span style="color: #666666">&lt;</span> _MIN:
-                _MIN <span style="color: #666666">=</span> x
-            <span style="color: #AA22FF; font-weight: bold">if</span> x <span style="color: #666666">&gt;</span> _MAX:
-                _MAX <span style="color: #666666">=</span> x
-        <span style="color: #AA22FF; font-weight: bold">return</span> _MIN, _MAX
-    _MIN, _MAX <span style="color: #666666">=</span> get_min_max(arr)
-    tmp <span style="color: #666666">=</span> [<span style="color: #666666">0</span>] <span style="color: #666666">*</span> (_MAX <span style="color: #666666">-</span> _MIN <span style="color: #666666">+</span> <span style="color: #666666">1</span>)
-    n <span style="color: #666666">=</span> <span style="color: #AA22FF">len</span>(arr)
-    <span style="color: #AA22FF; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(n):
-        tmp[arr[i] <span style="color: #666666">-</span> _MIN] <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
-    i <span style="color: #666666">=</span> <span style="color: #666666">0</span>
-    <span style="color: #AA22FF; font-weight: bold">for</span> j, x <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">enumerate</span>(tmp):
-        <span style="color: #AA22FF; font-weight: bold">for</span> _ <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #AA22FF">range</span>(x):
-            arr[i] <span style="color: #666666">=</span> j <span style="color: #666666">+</span> _MIN
-            i <span style="color: #666666">+=</span> <span style="color: #666666">1</span>
-    <span style="color: #AA22FF; font-weight: bold">return</span> arr
-</pre></div>
-
+<pre><code class="py"># 计数排序
+# 只能排整型数组
+def count_sort(arr):
+    def get_min_max(arr):
+        _MIN, _MAX = float(&quot;inf&quot;), -float(&quot;inf&quot;)
+        for x in arr:
+            if x &lt; _MIN:
+                _MIN = x
+            if x &gt; _MAX:
+                _MAX = x
+        return _MIN, _MAX
+    _MIN, _MAX = get_min_max(arr)
+    tmp = [0] * (_MAX - _MIN + 1)
+    n = len(arr)
+    for i in range(n):
+        tmp[arr[i] - _MIN] += 1
+    i = 0
+    for j, x in enumerate(tmp):
+        for _ in range(x):
+            arr[i] = j + _MIN
+            i += 1
+    return arr
+</code></pre>
 
 <p>完整代码见<a href="https://github.com/Rivarrl/leetcode_python/blob/master/basic/num_sort.py">这里</a></p>
 

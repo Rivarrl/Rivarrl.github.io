@@ -24,6 +24,21 @@
         <![endif]-->
 
 
+        <!-- mathjax config similar to math.stackexchange -->
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+                inlineMath: [ ['$', '$'] ],
+                displayMath: [ ['$$', '$$']],
+                processEscapes: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            messageStyle: "none",
+            "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     </head>
 
@@ -92,12 +107,11 @@
 <li>由于宏实现函数的功能是通过参数替换，编写宏的时候注意将宏定义的参数和整个宏分别用括号括起来，避免产生歧义；宏的副作用：参数替换中2次用同一参数A的话，如果传参为p++，则会将p值自增两次</li>
 <li>c不支持重载而c++支持重载的原因是c++编译器会在c编译器对函数名前面加双下划线的基础上再在后面加上对应的参数类型如</li>
 </ol>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>void foo(int x, int y)
+<pre><code>void foo(int x, int y)
 对应
 c:__foo
 c++:__foo_int_int
-</pre></div>
-
+</code></pre>
 
 <ol start="14">
 <li>代码题，如果循环step超过len，先对len取余</li>
@@ -117,78 +131,72 @@ c++:__foo_int_int
 </ol>
 <p>1) string字符串末尾有结束符&rsquo;\0&rsquo;</p>
 <p>分析下面代码有什么问题？</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">test1</span>()
+<pre><code class="c++">void test1()
 {
- <span style="color: #00BB00; font-weight: bold">char</span> string[<span style="color: #666666">10</span>];
- <span style="color: #00BB00; font-weight: bold">char</span><span style="color: #666666">*</span> str1 <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;0123456789&quot;</span>;
+ char string[10];
+ char* str1 = &quot;0123456789&quot;;
  strcpy( string, str1 );
 }
-</pre></div>
-
+</code></pre>
 
 <p>会造成数组越界, str1(含&rsquo;\0&rsquo;)有11字节，string只有10字节</p>
 <p>2) strcpy函数直到遇到&rsquo;\0&rsquo;才会停止</p>
 <p>分析下面代码有什么问题？</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">test2</span>()
+<pre><code class="c++">void test2()
 {
- <span style="color: #00BB00; font-weight: bold">char</span> string[<span style="color: #666666">10</span>], str1[<span style="color: #666666">10</span>];
- <span style="color: #00BB00; font-weight: bold">int</span> i;
- <span style="color: #AA22FF; font-weight: bold">for</span>(i<span style="color: #666666">=0</span>; i<span style="color: #666666">&lt;10</span>; i<span style="color: #666666">++</span>)
+ char string[10], str1[10];
+ int i;
+ for(i=0; i&lt;10; i++)
  {
- str1  <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;a&#39;</span>;
+ str1  = 'a';
  }
 strcpy( string, str1 );
 }
-</pre></div>
-
+</code></pre>
 
 <p>3) 指出下面代码有什么问题？</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">void</span> <span style="color: #00A000">test3</span>(<span style="color: #00BB00; font-weight: bold">char</span><span style="color: #666666">*</span> str1)
+<pre><code class="c++">void test3(char* str1)
 {
- <span style="color: #AA22FF; font-weight: bold">if</span>(str1 <span style="color: #666666">==</span> <span style="color: #AA22FF">NULL</span>){
-        <span style="color: #AA22FF; font-weight: bold">return</span> ;
+ if(str1 == NULL){
+        return ;
  }
- <span style="color: #00BB00; font-weight: bold">char</span> string[<span style="color: #666666">10</span>];
- <span style="color: #AA22FF; font-weight: bold">if</span>( strlen( str1 ) <span style="color: #666666">&lt;=</span> <span style="color: #666666">10</span> )
+ char string[10];
+ if( strlen( str1 ) &lt;= 10 )
  {
  strcpy( string, str1 );
  }
 }
-</pre></div>
-
+</code></pre>
 
 <p>if(strlen(str1) &lt;= 10)应改为if(strlen(str1) &lt; 10)，因为strlen的结果未统计’\0’所占用的1个字节。</p>
 <p>4) 写出完整的strcpy函数</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span><span style="color: #00A000">strcpy</span>( <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>strDest, <span style="color: #AA22FF; font-weight: bold">const</span> <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>strSrc )
+<pre><code class="c++">char *strcpy( char *strDest, const char *strSrc )
 {
- assert( (strDest <span style="color: #666666">!=</span> <span style="color: #AA22FF">NULL</span>) <span style="color: #666666">&amp;&amp;</span> (strSrc <span style="color: #666666">!=</span> <span style="color: #AA22FF">NULL</span>) );
- <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>address <span style="color: #666666">=</span> strDest;
- <span style="color: #AA22FF; font-weight: bold">while</span>((<span style="color: #666666">*</span>strDest<span style="color: #666666">++</span> <span style="color: #666666">=</span> <span style="color: #666666">*</span>strSrc<span style="color: #666666">++</span>)<span style="color: #666666">!=</span><span style="color: #BB4444">&#39;\0&#39;</span>);
- <span style="color: #AA22FF; font-weight: bold">return</span> address;
+ assert( (strDest != NULL) &amp;&amp; (strSrc != NULL) );
+ char *address = strDest;
+ while((*strDest++ = *strSrc++)!='\0');
+ return address;
 }
-</pre></div>
-
+</code></pre>
 
 <p>13) 为什么标准头文件都有类似以下的结构？</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800">#ifndef __INCvxWorksh</span>
-<span style="color: #008800">#define __INCvxWorksh</span>
-<span style="color: #008800">#ifdef __cplusplus</span>
-<span style="color: #AA22FF; font-weight: bold">extern</span> <span style="color: #BB4444">&quot;C&quot;</span> {
-<span style="color: #008800">#endif</span>
-<span style="color: #008800; font-style: italic">/*...*/</span>
-<span style="color: #008800">#ifdef __cplusplus</span>
+<pre><code class="c++">#ifndef __INCvxWorksh
+#define __INCvxWorksh
+#ifdef __cplusplus
+extern &quot;C&quot; {
+#endif
+/*...*/
+#ifdef __cplusplus
 }
-<span style="color: #008800">#endif</span>
-<span style="color: #008800">#endif </span><span style="color: #008800; font-style: italic">/* __INCvxWorksh */</span><span style="color: #008800"></span>
-</pre></div>
-
+#endif
+#endif /* __INCvxWorksh */
+</code></pre>
 
 <p>头文件中的编译宏</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800">#ifndef　__INCvxWorksh</span>
-<span style="color: #008800">#define　__INCvxWorksh</span>
-<span style="color: #008800">#endif</span>
-</pre></div>
-
+<pre><code class="c++">#ifndef　__INCvxWorksh
+#define　__INCvxWorksh
+#endif
+</code></pre>
 
 <p>的作用是防止被重复引用。
 作为一种面向对象的语言，C++支持函数重载，而过程式语言C则不支持。函数被C++编译后在symbol库中的名字与C语言的不同。例如，假设某个函数的原型为：
@@ -198,28 +206,26 @@ strcpy( string, str1 );
 <p>14) 编写一个函数，作用是把一个char组成的字符串循环右移n个。比如原来是“abcdefghi”如果n=2，移位后应该是“hiabcdefg” 函数头是这样的：
 //pStr是指向以&rsquo;\0&rsquo;结尾的字符串的指针
 //steps是要求移动的n</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>void LoopMove ( char * pStr, int steps )
+<pre><code>void LoopMove ( char * pStr, int steps )
 {
  //请填充...
 }
-</pre></div>
+</code></pre>
 
-
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>void LoopMove(char *str, int steps)
+<pre><code>void LoopMove(char *str, int steps)
 {
 int len = strlen(str);
 char tmp[MAXSIZE];
 step %= len;
 strcpy(tmp, str+len-steps);
 strcpy(tmp+steps, str);
-*(tmp+len)  = &#39;/0&#39;;
+*(tmp+len)  = '/0';
 strcpy(str, tmp);
 }
-</pre></div>
-
+</code></pre>
 
 <p>15) 编写wav文件结构体  <a href="https://www.nowcoder.com/ta/review-c/review?query=&amp;asc=true&amp;order=&amp;page=15">link</a></p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>typedef struct tagWaveFormat
+<pre><code>typedef struct tagWaveFormat
 {
  char cRiffFlag[4];
  UIN32 nFileLen;
@@ -235,98 +241,93 @@ strcpy(str, tmp);
  char cDataFlag[4];
  UIN16 nAudioLength;
 } WAVEFORMAT;
-</pre></div>
-
+</code></pre>
 
 <p>16) 编写类String的构造函数、析构函数和赋值函数，已知类String的原型为：</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #AA22FF; font-weight: bold">class</span> <span style="color: #0000FF">String</span>
+<pre><code class="c++">class String
 {
- <span style="color: #AA22FF; font-weight: bold">public</span><span style="color: #666666">:</span>
- String(<span style="color: #AA22FF; font-weight: bold">const</span> <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>str <span style="color: #666666">=</span> <span style="color: #AA22FF">NULL</span>); <span style="color: #008800; font-style: italic">// 普通构造函数</span>
- String(<span style="color: #AA22FF; font-weight: bold">const</span> String <span style="color: #666666">&amp;</span>other); <span style="color: #008800; font-style: italic">// 拷贝构造函数</span>
- <span style="color: #666666">~</span> String(<span style="color: #00BB00; font-weight: bold">void</span>); <span style="color: #008800; font-style: italic">// 析构函数</span>
- String <span style="color: #666666">&amp;</span> <span style="color: #AA22FF; font-weight: bold">operator</span> <span style="color: #666666">=</span>(<span style="color: #AA22FF; font-weight: bold">const</span> String <span style="color: #666666">&amp;</span>other); <span style="color: #008800; font-style: italic">// 赋值函数</span>
- <span style="color: #AA22FF; font-weight: bold">private</span><span style="color: #666666">:</span>
- <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>m_data; <span style="color: #008800; font-style: italic">// 用于保存字符串</span>
+ public:
+ String(const char *str = NULL); // 普通构造函数
+ String(const String &amp;other); // 拷贝构造函数
+ ~ String(void); // 析构函数
+ String &amp; operator =(const String &amp;other); // 赋值函数
+ private:
+ char *m_data; // 用于保存字符串
 };
-</pre></div>
+</code></pre>
 
-
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008800; font-style: italic">//普通构造函数</span>
-String<span style="color: #666666">::</span>String(<span style="color: #AA22FF; font-weight: bold">const</span> <span style="color: #00BB00; font-weight: bold">char</span> <span style="color: #666666">*</span>str)
+<pre><code class="c++">//普通构造函数
+String::String(const char *str)
 {
- <span style="color: #AA22FF; font-weight: bold">if</span>(str<span style="color: #666666">==</span><span style="color: #AA22FF">NULL</span>)
+ if(str==NULL)
  {
- m_data <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #00BB00; font-weight: bold">char</span>[<span style="color: #666666">1</span>]; <span style="color: #008800; font-style: italic">// 得分点：对空字符串自动申请存放结束标志&#39;\0&#39;的空</span>
- <span style="color: #008800; font-style: italic">//加分点：对m_data加NULL 判断</span>
- <span style="color: #666666">*</span>m_data <span style="color: #666666">=</span> <span style="color: #BB4444">&#39;\0&#39;</span>;
+ m_data = new char[1]; // 得分点：对空字符串自动申请存放结束标志'\0'的空
+ //加分点：对m_data加NULL 判断
+ *m_data = '\0';
  }
- <span style="color: #AA22FF; font-weight: bold">else</span>
+ else
  {
- <span style="color: #00BB00; font-weight: bold">int</span> length <span style="color: #666666">=</span> strlen(str);
- m_data <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #00BB00; font-weight: bold">char</span>[length<span style="color: #666666">+1</span>];
+ int length = strlen(str);
+ m_data = new char[length+1];
  strcpy(m_data, str);
  }
 }
-<span style="color: #008800; font-style: italic">// String的析构函数</span>
-String<span style="color: #666666">::~</span>String(<span style="color: #00BB00; font-weight: bold">void</span>)
+// String的析构函数
+String::~String(void)
 {
- <span style="color: #AA22FF; font-weight: bold">delete</span> [] m_data; <span style="color: #008800; font-style: italic">// 或delete m_data;</span>
+ delete [] m_data; // 或delete m_data;
 }
-<span style="color: #008800; font-style: italic">//拷贝构造函数</span>
-String<span style="color: #666666">::</span>String(<span style="color: #AA22FF; font-weight: bold">const</span> String <span style="color: #666666">&amp;</span>other) 　　　<span style="color: #008800; font-style: italic">// 得分点：输入参数为const型</span>
+//拷贝构造函数
+String::String(const String &amp;other) 　　　// 得分点：输入参数为const型
 {
- <span style="color: #00BB00; font-weight: bold">int</span> length <span style="color: #666666">=</span> strlen(other.m_data);
- m_data <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #00BB00; font-weight: bold">char</span>[length<span style="color: #666666">+1</span>]; 　　　　
+ int length = strlen(other.m_data);
+ m_data = new char[length+1]; 　　　　
  strcpy(m_data, other.m_data);
 }
-<span style="color: #008800; font-style: italic">//赋值函数</span>
-String <span style="color: #666666">&amp;</span> String<span style="color: #666666">::</span><span style="color: #AA22FF; font-weight: bold">operator</span> <span style="color: #666666">=</span>(<span style="color: #AA22FF; font-weight: bold">const</span> String <span style="color: #666666">&amp;</span>other) <span style="color: #008800; font-style: italic">// 得分点：输入参数为const型</span>
+//赋值函数
+String &amp; String::operator =(const String &amp;other) // 得分点：输入参数为const型
 {
- <span style="color: #AA22FF; font-weight: bold">if</span>(<span style="color: #AA22FF; font-weight: bold">this</span> <span style="color: #666666">==</span> <span style="color: #666666">&amp;</span>other) 　　<span style="color: #008800; font-style: italic">//得分点：检查自赋值</span>
- <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #666666">*</span><span style="color: #AA22FF; font-weight: bold">this</span>;
- <span style="color: #AA22FF; font-weight: bold">delete</span> [] m_data; 　　　　<span style="color: #008800; font-style: italic">//得分点：释放原有的内存资源</span>
- <span style="color: #00BB00; font-weight: bold">int</span> length <span style="color: #666666">=</span> strlen( other.m_data );
- m_data <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">new</span> <span style="color: #00BB00; font-weight: bold">char</span>[length<span style="color: #666666">+1</span>]; 　
+ if(this == &amp;other) 　　//得分点：检查自赋值
+ return *this;
+ delete [] m_data; 　　　　//得分点：释放原有的内存资源
+ int length = strlen( other.m_data );
+ m_data = new char[length+1]; 　
  strcpy( m_data, other.m_data );
- <span style="color: #AA22FF; font-weight: bold">return</span> <span style="color: #666666">*</span><span style="color: #AA22FF; font-weight: bold">this</span>; 　　　　　　　　<span style="color: #008800; font-style: italic">//得分点：返回本对象的引用</span>
+ return *this; 　　　　　　　　//得分点：返回本对象的引用
 }
-</pre></div>
-
+</code></pre>
 
 <p>17) 请说出static和const关键字尽可能多的作用</p>
 <p>static强调变量重复使用同一份，以及在变量在函数体内、变量在模块内、函数体在模块内的作用域；
 const强调所修饰对象的不可更改，得到常量和常函数。</p>
 <p>18) 请写一个C函数，若处理器是<code>Big_endian</code>的，则返回0；若是<code>Little_endian</code>的，则返回1</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">int</span> <span style="color: #00A000">checkCPU</span>()
+<pre><code class="c++">int checkCPU()
 {
  {
- <span style="color: #AA22FF; font-weight: bold">union</span> w
+ union w
  {
- <span style="color: #00BB00; font-weight: bold">int</span> a;
- <span style="color: #00BB00; font-weight: bold">char</span> b;
+ int a;
+ char b;
  } c;
- c.a <span style="color: #666666">=</span> <span style="color: #666666">1</span>;
- <span style="color: #AA22FF; font-weight: bold">return</span> (c.b <span style="color: #666666">==</span> <span style="color: #666666">1</span>);
+ c.a = 1;
+ return (c.b == 1);
  }
 }
-</pre></div>
-
+</code></pre>
 
 <p>小端(little_endian): 低地址存放低数据(pc) 大端(big_endian): 低地址存放高数据(手机,网络); union联合体共用内存区域，且一定从低地址开始存放数据(小端)
 如果将a赋值1且系统为小端模式，b的地址与a共享，b也应为1，反之则是大端模式</p>
 <p>19) 写一个函数返回1+2+3+…+n的值（假定结果不会超过长整型变量的范围）</p>
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #00BB00; font-weight: bold">int</span> <span style="color: #00A000">Sum</span>( <span style="color: #00BB00; font-weight: bold">int</span> n )
+<pre><code class="c++">int Sum( int n )
 {
- <span style="color: #00BB00; font-weight: bold">long</span> sum <span style="color: #666666">=</span> <span style="color: #666666">0</span>;
- <span style="color: #AA22FF; font-weight: bold">for</span>( <span style="color: #00BB00; font-weight: bold">int</span> i<span style="color: #666666">=1</span>; i<span style="color: #666666">&lt;=</span>n; i<span style="color: #666666">++</span> )
+ long sum = 0;
+ for( int i=1; i&lt;=n; i++ )
  {
- sum <span style="color: #666666">+=</span> i;
+ sum += i;
  }
- <span style="color: #AA22FF; font-weight: bold">return</span> sum;
+ return sum;
 }
-</pre></div>
-
+</code></pre>
 
 <p>21)
 请说一下<code>C++</code>和C语言的区别

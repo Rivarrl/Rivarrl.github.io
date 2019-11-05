@@ -137,6 +137,9 @@ $$</p>
 </pre></div>
 
 
+<ul>
+<li></li>
+</ul>
 <p><a href="https://leetcode-cn.com/problems/numbers-with-repeated-digits">1012. 至少有1位重复的数字</a>  </p>
 <p>思路：<br>
 <strong>至少有1位重复的数字的总数 = N - 没有重复数字的总数</strong><br>
@@ -164,8 +167,8 @@ $$
 f_3(i) = 
 \begin{cases} 
 f_3(i+1) + f_2(i, N[i] - \sum_{j=0}^{N[i]-1}\mathbb{I}(visit[j] == 1)), &amp; 1 &lt;= i &lt; n-1,  visit[i]=0 \\ 
-f_2(i, N[i] - \sum_{j=0}^{N[i]-1}\mathbb{I}(visit[j] == 1))), &amp; 1 &lt;= i &lt; n-1, visit[i]=1 \\
-N[i] + 1 - \sum_{j=0}^{N[i]}\mathbb{I}(visit[j] == 1)), &amp; i = n
+f_2(i, N[i] - \sum_{j=0}^{N[i]-1}\mathbb{I}(visit[j] == 1)), &amp; 1 &lt;= i &lt; n-1, visit[i]=1 \\
+N[i] + 1 - \sum_{j=0}^{N[i]}\mathbb{I}(visit[j] == 1), &amp; i = n
 \end{cases}
 $$</p>
 <blockquote>

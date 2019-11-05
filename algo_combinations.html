@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="排列组合相关的题以及解法 这里的排列组合指数学上的排列组合问题 用数学知识来解题即可 这类问题的最大特点为求一个数字，而不是求所有结果的集合(这类问题一般要用回溯法) 具体看例子吧 357. 计算各个位数不同的数字个数 思路： 排列组合，每一位在0~9中选择一个数，如果n比10大，必定会出现重复，所以只考虑在10以内的情况就行。...">
+        <meta name="keywords" content="Algorithm, Leetcode, Math, Python3">
+        <link rel="icon" href="./favicon.ico">
+
+        <title>排列组合相关的题以及解法 - Rivarrl</title>
+
+        <!-- Stylesheets -->
+        <link href="./css/all.min.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+        <!-- mathjax config similar to math.stackexchange -->
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+                inlineMath: [ ['$', '$'] ],
+                displayMath: [ ['$$', '$$']],
+                processEscapes: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            messageStyle: "none",
+            "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+        });
+        </script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('./images/background.jpg'); background-position: center; background-size: cover;">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="./"><img class="mr20" src="./images/logo.png" alt="logo">Rivarrl</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="./">Homepage</a>
+                                <a href="./categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">排列组合相关的题以及解法</h1>
+                      <p class="header-date">By <a href="./author/rivarrl.html">Rivarrl</a>, 2019-11-04 20:11:00, modified 2019-11-05 14:30:00, in category <a href="./category/leetcode.html">Leetcode</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="./tag/algorithm.html">Algorithm</a>, <a href="./tag/leetcode.html">Leetcode</a>, <a href="./tag/math.html">Math</a>, <a href="./tag/python3.html">Python3</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <h3>排列组合相关的题以及解法</h3>
+<blockquote>
+<p>这里的排列组合指数学上的排列组合问题<br>
+用数学知识来解题即可<br>
+这类问题的最大特点为求一个数字，而不是求所有结果的集合(这类问题一般要用回溯法)  </p>
+<p>具体看例子吧  </p>
+</blockquote>
+<p><a href="https://leetcode-cn.com/problems/count-numbers-with-unique-digits/">357. 计算各个位数不同的数字个数</a>  </p>
+<p>思路：<br>
+排列组合，每一位在0~9中选择一个数，如果n比10大，必定会出现重复，所以只考虑在10以内的情况就行。  </p>
+<p>我们按位从高向低选择，每有一个位置选择一个数字，候选区的数字就会减一。如果不考虑0在最高位的情况，单纯的进行10个数字的全排列，答案会是n!（因为想要满足各位数不同的话，从高到低每一位有10,9,8,&hellip;,3,2,1个剩余数字可选）  </p>
+<p>本题并不能忽略高位0的情况，所以要对问题分类讨论，分类当然是高位选0还是选1~9这两类。  </p>
+<p>这里就假设n=4，也就是0\~9999，这个区间按上述分类规则，可拆分为0\~999和1000\~9999两部分，可以观察得出第一部分是n=3的答案，第二部分则是在千位选定一个非0数的时候的排列组合，也就是<br>
+<code>9(1\~9) * 9 (0\~9排除位选择的数字) * 8 * 7 = 9*9*8*7</code><br>
+以此类推，第一部分(n=3)的解的第二部分为<code>9*9*8</code><br>
+&hellip;<br>
+n=1时解是10<br>
+而n=10时第二部分解是<code>9*9*8*7*6*5*4*3*2*1</code><br>
+可以观察得出：n=k的第二部分解就是上述n=10式子的前k项乘积的结果，如果我们把第二部分的公式记作函数f~0~(n), 1&lt;= n &lt;=10
+$$
+q = [9,9,8,7,6,5,4,3,2,1]</p>
+<p>f_0(i) = \prod_k^iq[k]
+$$</p>
+<p>本题就可以归纳成如下公式：<br>
+$$
+f(n) = 
+\begin{cases} 
+f(n-1) + f_0(n), &amp; n &gt; 1 \ 
+10, &amp; n=1 
+\end{cases}
+$$</p>
+<p>由于f~0~(1) = 9，上式可以化简为：<br>
+$$
+f(n) = \sum_{i=1}^{n}f_0(i) + 1
+$$</p>
+<p>代码：  </p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">countNumbersWithUniqueDigits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="n">res</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">c</span> <span class="o">*=</span> <span class="n">q</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+
+
+<p><a href="https://leetcode-cn.com/problems/numbers-with-repeated-digits">1012. 至少有1位重复的数字</a>  </p>
+<p>思路：<br>
+<strong>至少有1位重复的数字的总数 = N - 没有重复数字的总数</strong><br>
+问题可转成求<strong>没有重复的数字的总数</strong>，困难在于给的N不是位数而是具体的数值。<br>
+这里把上一题的方法称作f1（本题不包括0，即f~0~(1)=9），有：<br>
+$$
+f_1(n) = \sum_i^n f_0(i)
+$$
+用上一题的结论，方便起见，我们把N的位数记作D(N), N的第i高位记作N[i], 如果大于等于11了，求f~1~(10)即可。<br>
+D(N)小于11的时候，还是从最高位选择，这就需要分类讨论了，总体要分为以下三类，第一部分还是0，第二部分为1~(-1)，第三部分为N[0]。  </p>
+<p><strong>第一部分选0</strong>，区间就是0\~10^(D(N)-1)^ - 1 (0到D(N)-1个9)，也就是f~1~(digit(N) - 1)  </p>
+<p><strong>第二部分选1\~(x-1)</strong>，注意有可能不存在（x=1时），需要判断一下，这部分就是首位受限制的一个排列组合，限制是只能从1到x-1中选，也就是N[0]-1种可能，解为<code>(N[0]-1)*9*8*...*2*1</code><br>
+由于后面f~3~会用到类似上述操作，可以把上述功能抽象成方法f~2~(i, base), i表示从哪一位开始计算，base是将第i位的数字替换为base，比如上面说的情况应该调用f~2~(0, N[0]-1)，实际上就是上一题f~0~的变种，公式如下：
+$$
+q = [9,9,8,7,6,5,4,3,2,1]</p>
+<p>f_2(i, base) = base × \prod_{k=i+1}^{D(N)-1}q[k]
+$$  </p>
+<p><strong>第三部分是选x</strong>，选定x，就说明后面的位置不能再选择x了，所以需要一个visit数组来记录，visit数组用0和1代表0~9未使用和已使用。当本次选定N[0]后，后面的位数可以从0\~N[1]选择，如果N[1]>N[0]的话，选择数字的数量就会受到N[0]的影响而减1，推广到第k位，第k位的数值为N[k]，它会受到所有在N[k]之前访问过的比N[k]小的数的影响而减sum(visit[0]\~visit[N[k]])。<br>
+由于首位已经是非0数了，0的特殊性就不用再讨论，第三部分可分为两部分：0\~N[i]-1 中未使用的数和N[i]。<br>
+如果挑选的是N[i]的话，是一个递归，就是f~3~(i+1)的结果，<strong>注意每次递归前把上面的visit求和算出来并且进行本次visit的更新</strong>，而如果当前的N[i]前面出现过，就直接跳出，因为再次选择就造成重复，不满足要求；<br>
+如果是0\~N[i]-1（注意可能没有这部分，全被使用过或N[i]=0）部分，需要用当前的可选数量值，假设为base，去做上面f~2~的操作，解释一下，前面一定是j属于0\~i-1次，每次选定N[j]，才会走到当前这一步，所以在<code>9*9*8*...*2*1</code>的连乘式中的前i-1项都应该是1，第i项为当前可选的base，也就是调用f~2~(i, base)。令第三部分为f~3~(i)的话，由于i=0时为父问题，所以<code>1&lt;=i&lt;=D(N)-1</code>，有<br>
+$$
+f_3(i) = 
+\begin{cases} 
+f_3(i+1) + f_2(i, N[i] - \sum_{j=0}^{N[i]-1}\mathbb{I}(visit[j] == 1)), &amp; 1 &lt;= i &lt; n-1,  visit[i]=0\ 
+f_2(i, N[i] - \sum_{j=0}^{N[i]-1}\mathbb{I}(visit[j] == 1))), &amp; 1 &lt;= i &lt; n-1, visit[i]=1 \
+N[i] + 1 - \sum_{j=0}^{N[i]}\mathbb{I}(visit[j] == 1)), &amp; i = n
+\end{cases}
+$$</p>
+<blockquote>
+<p>注：空心的I为示性函数，函数内部表达式成立为1，不成立为0   </p>
+</blockquote>
+<p>整理一下，本体可写成如下公式：<br>
+$$
+f(N) = 
+\begin{cases}
+f_1(10), &amp; D(N) &gt; 10 \
+f_1(D(N)-1) + f_2(0, N[0] - 1) + f_3(0), &amp; 1 &lt;= D(N) &lt;= 10 \
+\end{cases}</p>
+<p>g(N) = N - f(N)
+$$
+找个特例手推以下就好了，比如N = 1962</p>
+<p>代码：  </p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">numDupDigitsAtMostN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">f1</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">res</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">*=</span> <span class="n">q</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">x</span>
+            <span class="k">return</span> <span class="n">res</span>
+
+        <span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">base</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">base</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+                <span class="n">res</span> <span class="o">*=</span> <span class="n">q</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">res</span>
+
+        <span class="k">def</span> <span class="nf">f3</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sn</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">visit</span><span class="p">[:</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">base</span> <span class="o">=</span> <span class="n">m</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">visit</span><span class="p">[:</span><span class="n">m</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">visit</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">visit</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">f3</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">base</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">+=</span> <span class="n">f2</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">res</span>
+
+        <span class="k">if</span> <span class="n">N</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">sn</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sn</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="n">visit</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">11</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">N</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">-=</span> <span class="n">f1</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sn</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">res</span> <span class="o">-=</span> <span class="n">f1</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">-=</span> <span class="n">f2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">visit</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">res</span> <span class="o">-=</span> <span class="n">f3</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+
+
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="./archives.html">Archives</a></li>
+                            <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./authors.html">Authors</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="tencent://message/?uin=1049793871&Site=Sambow&Menu=yes" target="_blank">QQ</a></li>
+                            <li><a href="http://github.com/Rivarrl" target="_blank">GitHub</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>© blogname 2015</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+        <!-- live2d -->
+        <script src="./js/L2Dwidget.min.js"></script>
+        <script src="./js/L2Dwidget.0.min.js"></script>
+        <script>
+            L2Dwidget.init({
+                "model":{
+                    "scale":1,"hHeadPos":0.5,"vHeadPos":0.618,
+                    "jsonPath": "./live2d-models/live2d-widget-model-tororo/assets/tororo.model.json"
+                },
+                "display":{
+                    "superSample":2,"width":100,"height":220,"position":"right","hOffset":-30,"vOffset":-200
+                },
+                "mobile":{
+                    "show":false,"scale":0.5
+                },
+                "react":{
+                    "opacityDefault":0.9,"opacityOnHover":0.2
+                }
+            });
+        </script>
+        <div id="live2d-widget">
+            <canvas id="live2dcanvas" width="200" height="440"
+            style="position: fixed; opacity: 1; right: 0px; bottom: 0; z-index: 99999; pointer-events: none;"></canvas>
+        </div>
+    </body>
+</html>

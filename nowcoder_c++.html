@@ -68,7 +68,7 @@
               <div class="col-lg-12">
                   <div class="header-content">
                       <h1 class="header-title">牛客C++校招面试题合集总结</h1>
-                      <p class="header-date">By <a href="./author/rivarrl.html">Rivarrl</a>, 2019-10-16 23:23:00, modified 2019-10-16 23:23:00, in category <a href="./category/notes.html">Notes</a></p>
+                      <p class="header-date">By <a href="./author/rivarrl.html">Rivarrl</a>, 2019-10-17 23:23:00, modified 2019-10-26 19:30:00, in category <a href="./category/notes.html">Notes</a></p>
                       <div class="header-underline"></div>
                       <div class="clearfix"></div>
                       <p class="pull-right header-tags">
@@ -89,11 +89,11 @@
     <div class="container content">
         <h3>牛客C++校招面试题合集总结</h3>
 <blockquote>
-<p>2019-10-17
+<p>2019-10-17<br>
   明天面试c++服务端，临时恶补一下</p>
 </blockquote>
 <ol>
-<li>string字符串末尾有结束符&rsquo;\0&rsquo;</li>
+<li>string字符串末尾有结束符&rsquo;\0&rsquo;  </li>
 <li>strcpy函数直到遇到&rsquo;\0&rsquo;才会停止</li>
 <li>strlen函数不计算&rsquo;\0&rsquo;占位</li>
 <li>写出完整的strcpy函数</li>
@@ -109,7 +109,7 @@
 </ol>
 <div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">foo</span><span class="p">(</span><span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span><span class="p">)</span>
 <span class="err">对应</span>
-<span class="k">c</span><span class="p">:</span><span class="n">__foo</span>
+<span class="k">c</span><span class="p">:</span><span class="n">__foo</span> 
 <span class="k">c</span><span class="o">++</span><span class="p">:</span><span class="n">__foo_int_int</span>
 </pre></div>
 
@@ -130,7 +130,7 @@
 <li>三角形坐标面积公式：<code>S=(1/2)*(x1y2+x2y3+x3y1-x2y1-x3y2-x1y3)</code>或者<code>S=(1/2)*((x2-x1)*(y3-y1) - (x3-x1)*(y2-y1))</code></li>
 <li>四种智能指针：<code>shared_ptr,unique_ptr,weak_ptr,auto_ptr</code></li>
 </ol>
-<p>1) string字符串末尾有结束符&rsquo;\0&rsquo;</p>
+<p>1) string字符串末尾有结束符&rsquo;\0&rsquo;  </p>
 <p>分析下面代码有什么问题？</p>
 <div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">test1</span><span class="p">()</span>
 <span class="p">{</span>
@@ -172,13 +172,13 @@
 </pre></div>
 
 
-<p>if(strlen(str1) &lt;= 10)应改为if(strlen(str1) &lt; 10)，因为strlen的结果未统计’\0’所占用的1个字节。</p>
+<p>if(strlen(str1) &lt;= 10)应改为if(strlen(str1) &lt; 10)，因为strlen的结果未统计’\0’所占用的1个字节。 </p>
 <p>4) 写出完整的strcpy函数</p>
-<div class="highlight"><pre><span></span><span class="kt">char</span> <span class="o">*</span><span class="nf">strcpy</span><span class="p">(</span> <span class="kt">char</span> <span class="o">*</span><span class="n">strDest</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">strSrc</span> <span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="kt">char</span> <span class="o">*</span><span class="nf">strcpy</span><span class="p">(</span> <span class="kt">char</span> <span class="o">*</span><span class="n">strDest</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">strSrc</span> <span class="p">)</span> 
 <span class="p">{</span>
  <span class="n">assert</span><span class="p">(</span> <span class="p">(</span><span class="n">strDest</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">strSrc</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">);</span>
- <span class="kt">char</span> <span class="o">*</span><span class="n">address</span> <span class="o">=</span> <span class="n">strDest</span><span class="p">;</span>
- <span class="k">while</span><span class="p">((</span><span class="o">*</span><span class="n">strDest</span><span class="o">++</span> <span class="o">=</span> <span class="o">*</span><span class="n">strSrc</span><span class="o">++</span><span class="p">)</span><span class="o">!=</span><span class="sc">&#39;\0&#39;</span><span class="p">);</span>
+ <span class="kt">char</span> <span class="o">*</span><span class="n">address</span> <span class="o">=</span> <span class="n">strDest</span><span class="p">;</span> 
+ <span class="k">while</span><span class="p">((</span><span class="o">*</span><span class="n">strDest</span><span class="o">++</span> <span class="o">=</span> <span class="o">*</span><span class="n">strSrc</span><span class="o">++</span><span class="p">)</span><span class="o">!=</span><span class="sc">&#39;\0&#39;</span><span class="p">);</span> 
  <span class="k">return</span> <span class="n">address</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -186,14 +186,14 @@
 
 <p>13) 为什么标准头文件都有类似以下的结构？</p>
 <div class="highlight"><pre><span></span><span class="cp">#ifndef __INCvxWorksh</span>
-<span class="cp">#define __INCvxWorksh</span>
+<span class="cp">#define __INCvxWorksh </span>
 <span class="cp">#ifdef __cplusplus</span>
 <span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
-<span class="cp">#endif</span>
-<span class="cm">/*...*/</span>
+<span class="cp">#endif </span>
+<span class="cm">/*...*/</span> 
 <span class="cp">#ifdef __cplusplus</span>
 <span class="p">}</span>
-<span class="cp">#endif</span>
+<span class="cp">#endif </span>
 <span class="cp">#endif </span><span class="cm">/* __INCvxWorksh */</span><span class="cp"></span>
 </pre></div>
 
@@ -210,9 +210,9 @@
 <code>void foo(int x, int y);</code>
 该函数被C编译器编译后在symbol库中的名字为<code>_foo</code>，而C++编译器则会产生像<code>_foo_int_int</code>之类的名字。<code>_foo_int_int</code>这样的名字包含了函数名和函数参数数量及类型信息，C++就是靠这种机制来实现函数重载的。
 为了实现C和C++的混合编程，C++提供了C连接交换指定符号extern &ldquo;C&rdquo;来解决名字匹配问题，函数声明前加上extern &ldquo;C&rdquo;后，则编译器就会按照C语言的方式将该函数编译为_foo，这样C语言中就可以调用C++的函数了。</p>
-<p>14) 编写一个函数，作用是把一个char组成的字符串循环右移n个。比如原来是“abcdefghi”如果n=2，移位后应该是“hiabcdefg” 函数头是这样的：
-//pStr是指向以&rsquo;\0&rsquo;结尾的字符串的指针
-//steps是要求移动的n</p>
+<p>14) 编写一个函数，作用是把一个char组成的字符串循环右移n个。比如原来是“abcdefghi”如果n=2，移位后应该是“hiabcdefg” 函数头是这样的：<br>
+//pStr是指向以&rsquo;\0&rsquo;结尾的字符串的指针<br>
+//steps是要求移动的n  </p>
 <div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">LoopMove</span> <span class="p">(</span> <span class="nb">char</span> <span class="o">*</span> <span class="n">pStr</span><span class="p">,</span> <span class="nb">int</span> <span class="n">steps</span> <span class="p">)</span>
 <span class="err">{</span>
  <span class="o">//</span><span class="err">请填充</span><span class="p">...</span>
@@ -235,75 +235,75 @@
 
 <p>15) 编写wav文件结构体  <a href="https://www.nowcoder.com/ta/review-c/review?query=&amp;asc=true&amp;order=&amp;page=15">link</a></p>
 <div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">tagWaveFormat</span>
-<span class="err">{</span>
- <span class="nb">char</span> <span class="n">cRiffFlag</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
- <span class="n">UIN32</span> <span class="n">nFileLen</span><span class="p">;</span>
- <span class="nb">char</span> <span class="n">cWaveFlag</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
- <span class="nb">char</span> <span class="n">cFmtFlag</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
- <span class="nb">char</span> <span class="n">cTransition</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
- <span class="n">UIN16</span> <span class="n">nFormatTag</span> <span class="p">;</span>
- <span class="n">UIN16</span> <span class="n">nChannels</span><span class="p">;</span>
- <span class="n">UIN16</span> <span class="n">nSamplesPerSec</span><span class="p">;</span>
- <span class="n">UIN32</span> <span class="n">nAvgBytesperSec</span><span class="p">;</span>
- <span class="n">UIN16</span> <span class="n">nBlockAlign</span><span class="p">;</span>
- <span class="n">UIN16</span> <span class="n">nBitNumPerSample</span><span class="p">;</span>
- <span class="nb">char</span> <span class="n">cDataFlag</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
- <span class="n">UIN16</span> <span class="n">nAudioLength</span><span class="p">;</span>
+<span class="err">{</span> 
+ <span class="nb">char</span> <span class="n">cRiffFlag</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span> 
+ <span class="n">UIN32</span> <span class="n">nFileLen</span><span class="p">;</span> 
+ <span class="nb">char</span> <span class="n">cWaveFlag</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span> 
+ <span class="nb">char</span> <span class="n">cFmtFlag</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span> 
+ <span class="nb">char</span> <span class="n">cTransition</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span> 
+ <span class="n">UIN16</span> <span class="n">nFormatTag</span> <span class="p">;</span> 
+ <span class="n">UIN16</span> <span class="n">nChannels</span><span class="p">;</span> 
+ <span class="n">UIN16</span> <span class="n">nSamplesPerSec</span><span class="p">;</span> 
+ <span class="n">UIN32</span> <span class="n">nAvgBytesperSec</span><span class="p">;</span> 
+ <span class="n">UIN16</span> <span class="n">nBlockAlign</span><span class="p">;</span> 
+ <span class="n">UIN16</span> <span class="n">nBitNumPerSample</span><span class="p">;</span> 
+ <span class="nb">char</span> <span class="n">cDataFlag</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span> 
+ <span class="n">UIN16</span> <span class="n">nAudioLength</span><span class="p">;</span> 
 <span class="err">}</span> <span class="n">WAVEFORMAT</span><span class="p">;</span>
 </pre></div>
 
 
 <p>16) 编写类String的构造函数、析构函数和赋值函数，已知类String的原型为：</p>
 <div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">String</span>
-<span class="p">{</span>
- <span class="k">public</span><span class="o">:</span>
- <span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">);</span> <span class="c1">// 普通构造函数</span>
- <span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">);</span> <span class="c1">// 拷贝构造函数</span>
- <span class="o">~</span> <span class="n">String</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span> <span class="c1">// 析构函数</span>
- <span class="n">String</span> <span class="o">&amp;</span> <span class="k">operator</span> <span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">);</span> <span class="c1">// 赋值函数</span>
- <span class="k">private</span><span class="o">:</span>
- <span class="kt">char</span> <span class="o">*</span><span class="n">m_data</span><span class="p">;</span> <span class="c1">// 用于保存字符串</span>
+<span class="p">{</span> 
+ <span class="k">public</span><span class="o">:</span> 
+ <span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">);</span> <span class="c1">// 普通构造函数 </span>
+ <span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">);</span> <span class="c1">// 拷贝构造函数 </span>
+ <span class="o">~</span> <span class="n">String</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span> <span class="c1">// 析构函数 </span>
+ <span class="n">String</span> <span class="o">&amp;</span> <span class="k">operator</span> <span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">);</span> <span class="c1">// 赋值函数 </span>
+ <span class="k">private</span><span class="o">:</span> 
+ <span class="kt">char</span> <span class="o">*</span><span class="n">m_data</span><span class="p">;</span> <span class="c1">// 用于保存字符串 </span>
 <span class="p">};</span>
 </pre></div>
 
 
 <div class="highlight"><pre><span></span><span class="c1">//普通构造函数</span>
-<span class="n">String</span><span class="o">::</span><span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span>
+<span class="n">String</span><span class="o">::</span><span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">str</span><span class="p">)</span> 
 <span class="p">{</span>
- <span class="k">if</span><span class="p">(</span><span class="n">str</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span>
+ <span class="k">if</span><span class="p">(</span><span class="n">str</span><span class="o">==</span><span class="nb">NULL</span><span class="p">)</span> 
  <span class="p">{</span>
  <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">// 得分点：对空字符串自动申请存放结束标志&#39;\0&#39;的空</span>
  <span class="c1">//加分点：对m_data加NULL 判断</span>
- <span class="o">*</span><span class="n">m_data</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
- <span class="p">}</span>
+ <span class="o">*</span><span class="n">m_data</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span> 
+ <span class="p">}</span> 
  <span class="k">else</span>
  <span class="p">{</span>
- <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
- <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">length</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
- <span class="n">strcpy</span><span class="p">(</span><span class="n">m_data</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span>
+ <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">str</span><span class="p">);</span> 
+ <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">length</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span> 
+ <span class="n">strcpy</span><span class="p">(</span><span class="n">m_data</span><span class="p">,</span> <span class="n">str</span><span class="p">);</span> 
  <span class="p">}</span>
 <span class="p">}</span>
 <span class="c1">// String的析构函数</span>
-<span class="n">String</span><span class="o">::~</span><span class="n">String</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="n">String</span><span class="o">::~</span><span class="n">String</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> 
 <span class="p">{</span>
  <span class="k">delete</span> <span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span> <span class="c1">// 或delete m_data;</span>
 <span class="p">}</span>
 <span class="c1">//拷贝构造函数</span>
 <span class="n">String</span><span class="o">::</span><span class="n">String</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">)</span> 　　　<span class="c1">// 得分点：输入参数为const型</span>
-<span class="p">{</span>
- <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">m_data</span><span class="p">);</span>
+<span class="p">{</span> 
+ <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="n">m_data</span><span class="p">);</span> 
  <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">length</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span> 　　　　
- <span class="n">strcpy</span><span class="p">(</span><span class="n">m_data</span><span class="p">,</span> <span class="n">other</span><span class="p">.</span><span class="n">m_data</span><span class="p">);</span>
+ <span class="n">strcpy</span><span class="p">(</span><span class="n">m_data</span><span class="p">,</span> <span class="n">other</span><span class="p">.</span><span class="n">m_data</span><span class="p">);</span> 
 <span class="p">}</span>
 <span class="c1">//赋值函数</span>
 <span class="n">String</span> <span class="o">&amp;</span> <span class="n">String</span><span class="o">::</span><span class="k">operator</span> <span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">)</span> <span class="c1">// 得分点：输入参数为const型</span>
-<span class="p">{</span>
+<span class="p">{</span> 
  <span class="k">if</span><span class="p">(</span><span class="k">this</span> <span class="o">==</span> <span class="o">&amp;</span><span class="n">other</span><span class="p">)</span> 　　<span class="c1">//得分点：检查自赋值</span>
- <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+ <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span> 
  <span class="k">delete</span> <span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span> 　　　　<span class="c1">//得分点：释放原有的内存资源</span>
- <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span> <span class="n">other</span><span class="p">.</span><span class="n">m_data</span> <span class="p">);</span>
+ <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span> <span class="n">other</span><span class="p">.</span><span class="n">m_data</span> <span class="p">);</span> 
  <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">length</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span> 　
- <span class="n">strcpy</span><span class="p">(</span> <span class="n">m_data</span><span class="p">,</span> <span class="n">other</span><span class="p">.</span><span class="n">m_data</span> <span class="p">);</span>
+ <span class="n">strcpy</span><span class="p">(</span> <span class="n">m_data</span><span class="p">,</span> <span class="n">other</span><span class="p">.</span><span class="n">m_data</span> <span class="p">);</span> 
  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span> 　　　　　　　　<span class="c1">//得分点：返回本对象的引用</span>
 <span class="p">}</span>
 </pre></div>
@@ -317,7 +317,7 @@ const强调所修饰对象的不可更改，得到常量和常函数。</p>
 <span class="p">{</span>
  <span class="p">{</span>
  <span class="k">union</span> <span class="n">w</span>
- <span class="p">{</span>
+ <span class="p">{</span> 
  <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
  <span class="kt">char</span> <span class="n">b</span><span class="p">;</span>
  <span class="p">}</span> <span class="n">c</span><span class="p">;</span>
@@ -328,7 +328,7 @@ const强调所修饰对象的不可更改，得到常量和常函数。</p>
 </pre></div>
 
 
-<p>小端(little_endian): 低地址存放低数据(pc) 大端(big_endian): 低地址存放高数据(手机,网络); union联合体共用内存区域，且一定从低地址开始存放数据(小端)
+<p>小端(little_endian): 低地址存放低数据(pc) 大端(big_endian): 低地址存放高数据(手机,网络); union联合体共用内存区域，且一定从低地址开始存放数据(小端)<br>
 如果将a赋值1且系统为小端模式，b的地址与a共享，b也应为1，反之则是大端模式</p>
 <p>19) 写一个函数返回1+2+3+…+n的值（假定结果不会超过长整型变量的范围）</p>
 <div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">Sum</span><span class="p">(</span> <span class="kt">int</span> <span class="n">n</span> <span class="p">)</span>
@@ -339,43 +339,43 @@ const强调所修饰对象的不可更改，得到常量和常函数。</p>
  <span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span>
  <span class="p">}</span>
  <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="p">}</span> 
 </pre></div>
 
 
 <p>21)
-请说一下<code>C++</code>和C语言的区别
-设计思想上：
-<code>C++</code>是面向对象的语言，而C是面向过程的结构化编程语言
-语法上：
-<code>C++</code>具有封装、继承和多态三种特性
+请说一下<code>C++</code>和C语言的区别<br>
+设计思想上：<br>
+<code>C++</code>是面向对象的语言，而C是面向过程的结构化编程语言<br>
+语法上：<br>
+<code>C++</code>具有封装、继承和多态三种特性<br>
 <code>C++</code>相比C，增加多许多类型安全的功能，比如强制类型转换、<code>C++</code>支持范式编程，比如模板类、函数模板等`</p>
 <p>24)
-说一说<code>c++</code>中四种cast转换</p>
-<p><code>C++</code>中四种类型转换是：<code>static_cast, dynamic_cast, const_cast, reinterpret_cast</code>
-1、const_cast
-用于将const变量转为非const
-2、static_cast
-用于各种隐式转换，比如非const转const，void*转指针等, static_cast能用于多态向上转化，如果向下转能成功但是不安全，结果未知；
-3、dynamic_cast
-用于动态类型转换。只能用于含有虚函数的类，用于类层次间的向上和向下转化。只能转指针或引用。向下转化时，如果是非法的对于指针返回NULL，对于引用抛异常。要深入了解内部转换的原理。
-向上转换：指的是子类向基类的转换
-向下转换：指的是基类向子类的转换
-它通过判断在执行到该语句的时候变量的运行时类型和要转换的类型是否相同来判断是否能够进行向下转换。
-4、reinterpret_cast
-几乎什么都可以转，比如将int转指针，可能会出问题，尽量少用；
-5、为什么不使用C的强制转换？
+说一说<code>c++</code>中四种cast转换  </p>
+<p><code>C++</code>中四种类型转换是：<code>static_cast, dynamic_cast, const_cast, reinterpret_cast</code><br>
+1、const_cast<br>
+用于将const变量转为非const<br>
+2、static_cast<br>
+用于各种隐式转换，比如非const转const，void*转指针等, static_cast能用于多态向上转化，如果向下转能成功但是不安全，结果未知；<br>
+3、dynamic_cast<br>
+用于动态类型转换。只能用于含有虚函数的类，用于类层次间的向上和向下转化。只能转指针或引用。向下转化时，如果是非法的对于指针返回NULL，对于引用抛异常。要深入了解内部转换的原理。<br>
+向上转换：指的是子类向基类的转换<br>
+向下转换：指的是基类向子类的转换<br>
+它通过判断在执行到该语句的时候变量的运行时类型和要转换的类型是否相同来判断是否能够进行向下转换。<br>
+4、reinterpret_cast<br>
+几乎什么都可以转，比如将int转指针，可能会出问题，尽量少用；<br>
+5、为什么不使用C的强制转换？<br>
 C的强制转换表面上看起来功能强大什么都能转，但是转化不够明确，不能进行错误检查，容易出错。</p>
 <p>25)
-请说一下C/C++ 中指针和引用的区别？
-1.指针有自己的一块空间，而引用只是一个别名；
-2.使用sizeof看一个指针的大小是4，而引用则是被引用对象的大小；
-3.指针可以被初始化为NULL，而引用必须被初始化且必须是一个已有对象 的引用；
-4.作为参数传递时，指针需要被解引用才可以对对象进行操作，而直接对引 用的修改都会改变引用所指向的对象；
-5.可以有const指针，但是没有const引用；
-6.指针在使用中可以指向其它对象，但是引用只能是一个对象的引用，不能 被改变；
-7.指针可以有多级指针（**p），而引用至于一级；
-8.指针和引用使用++运算符的意义不一样；
+请说一下C/C++ 中指针和引用的区别？<br>
+1.指针有自己的一块空间，而引用只是一个别名；<br>
+2.使用sizeof看一个指针的大小是4，而引用则是被引用对象的大小；<br>
+3.指针可以被初始化为NULL，而引用必须被初始化且必须是一个已有对象 的引用；<br>
+4.作为参数传递时，指针需要被解引用才可以对对象进行操作，而直接对引 用的修改都会改变引用所指向的对象；<br>
+5.可以有const指针，但是没有const引用；<br>
+6.指针在使用中可以指向其它对象，但是引用只能是一个对象的引用，不能 被改变；<br>
+7.指针可以有多级指针（**p），而引用至于一级；<br>
+8.指针和引用使用++运算符的意义不一样；<br>
 9.如果返回动态内存分配的对象或者内存，必须使用指针，引用可能引起内存泄露。</p>
 
 

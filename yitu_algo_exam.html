@@ -89,35 +89,35 @@
     <div class="container content">
         <h3>秋招题复现（依图科技2019 - 算法）</h3>
 <blockquote>
-<p>四道题有三道都没ac，打击很大&hellip;复现一下
+<p>四道题有三道都没ac，打击很大&hellip;复现一下<br>
 不保证对，先写下来以后和感兴趣的同学讨论</p>
 </blockquote>
 <p>输入输出就不按照笔试的方式了，直接用函数输入了</p>
 <h4>题目1 - Ensemble</h4>
-<p>目前有一个二分类任务，已经有2个模型A B
-对于一张图 A模型会输出两个值A0 A1
-表示A模型认为这张图属于类别0的概率为A0，1的概率为A1
-B和A相同
-对于一张label为0的图而言，A0&gt;A1时，说明A模型预测正确，A0&lt;=A1时预测错误
-对于一张label为1的图而言，A0<A1时，说明A模型预测正确，A0>=A1时预测错误
+<p>目前有一个二分类任务，已经有2个模型A B<br>
+对于一张图 A模型会输出两个值A0 A1<br>
+表示A模型认为这张图属于类别0的概率为A0，1的概率为A1<br>
+B和A相同<br>
+对于一张label为0的图而言，A0&gt;A1时，说明A模型预测正确，A0&lt;=A1时预测错误<br>
+对于一张label为1的图而言，A0<A1时，说明A模型预测正确，A0>=A1时预测错误<br>
 定义一个ensemble的权量x, 0&lt;=x&lt;=1</p>
-<p>定义C(x) 是A，B模型按照权重值为x,1-x的ensemble模型
-C(x)认为这张图是类别0的概率为<code>x * A0 + (1-x) * B0</code>
-C(x)认为这张图是类别1的概率为<code>x * A1 + (1-x) * B1</code></p>
+<p>定义C(x) 是A，B模型按照权重值为x,1-x的ensemble模型<br>
+C(x)认为这张图是类别0的概率为<code>x * A0 + (1-x) * B0</code><br>
+C(x)认为这张图是类别1的概率为<code>x * A1 + (1-x) * B1</code>  </p>
 <p>如果x服从均匀分布
-求C(x)模型在这n张图片上做对的个数的数学期望</p>
-<p>分析：
-C(x)预测对这一事件包括C(x)和类别同0和同1两种
-同0时，需要让C(x)的1式减去C(x)的2式 &gt; 0；即<code>x*(A0-A1) + (1-x)*(B0-B1) &gt; 0</code>
-同1时，1式减2式小于0；即<code>x*(A0-A1) + (1-x)*(B0-B1) &lt; 0</code>
-结合label的数值可将两个不等式化为一个不等式：
-<code>(1-2*label)*x*(A0-A1) + (1-x)*(B0-B1) &gt; 0</code>
-求解上述不等式得：
-<code>z = (B1-B0) / (A0-A1+B1-B0)</code>
-<code>x &gt; z, label = 0时</code>
-<code>x &lt; z, label = 1时</code>
-z在0-1之间, x &gt; z的期望为1-z, x &lt; z的期望为z
-最后将每一行的期望求和</p>
+求C(x)模型在这n张图片上做对的个数的数学期望  </p>
+<p>分析：<br>
+C(x)预测对这一事件包括C(x)和类别同0和同1两种<br>
+同0时，需要让C(x)的1式减去C(x)的2式 &gt; 0；即<code>x*(A0-A1) + (1-x)*(B0-B1) &gt; 0</code><br>
+同1时，1式减2式小于0；即<code>x*(A0-A1) + (1-x)*(B0-B1) &lt; 0</code>  <br>
+结合label的数值可将两个不等式化为一个不等式： <br>
+<code>(1-2*label)*x*(A0-A1) + (1-x)*(B0-B1) &gt; 0</code>   <br>
+求解上述不等式得：<br>
+<code>z = (B1-B0) / (A0-A1+B1-B0)</code>   <br>
+<code>x &gt; z, label = 0时</code>    <br>
+<code>x &lt; z, label = 1时</code><br>
+z在0-1之间, x &gt; z的期望为1-z, x &lt; z的期望为z<br>
+最后将每一行的期望求和  </p>
 <blockquote>
 <p>注意求不等式 0不能作为分母 以及x的真实取值范围[0,1]</p>
 </blockquote>
@@ -139,28 +139,24 @@ z在0-1之间, x &gt; z的期望为1-z, x &lt; z的期望为z
 
 
 <h4>题目2 - Party</h4>
-<p>你是一个活动晚会的组织者，晚会总时长为t分钟，共有n个候选节目。
-每个候选节目有三个值，ai, bi, ci。ci表示这个节目会持续ci分钟。
-如果在第i个节目开始时，晚会已经进行了p分钟，那么参与晚会的成员对这个晚会的满意度会增加<code>ai + p * bi</code>。
-你需要在n个候选节目中挑选若干个，并安排在合适的时间，使得晚会满意度达到最大。
-要求两个节目时间不能重叠，且你可以在任意时间安排人员进行任意时长的休息（除节目进行时），而不会影响满意度。
-晚会开始的时候视为第0分钟。</p>
-<p>输入： 节目列表arr(ai, bi, ci)，晚会总时间t，节目总数n
-输出： 最大满意度</p>
-<p>例如：
-输入： arr = [[3, 2, 2], [2, 3, 4]], t=7, n=2
+<p>你是一个活动晚会的组织者，晚会总时长为t分钟，共有n个候选节目。<br>
+每个候选节目有三个值，ai, bi, ci。ci表示这个节目会持续ci分钟。<br>
+如果在第i个节目开始时，晚会已经进行了p分钟，那么参与晚会的成员对这个晚会的满意度会增加<code>ai + p * bi</code>。<br>
+你需要在n个候选节目中挑选若干个，并安排在合适的时间，使得晚会满意度达到最大。<br>
+要求两个节目时间不能重叠，且你可以在任意时间安排人员进行任意时长的休息（除节目进行时），而不会影响满意度。<br>
+晚会开始的时候视为第0分钟。  </p>
+<p>输入： 节目列表arr(ai, bi, ci)，晚会总时间t，节目总数n<br>
+输出： 最大满意度  </p>
+<p>例如：<br>
+输入： arr = [[3, 2, 2], [2, 3, 4]], t=7, n=2<br>
 输出： 18</p>
-<p>分析：
-总时长为t，从n个候选节目挑选若干使得满意度最大，无论挑选的节目总时长是否达到t，最后一个节目表演结束都要踩着晚会结束的时间点才会使得本次选择的满意度最大化。挑选问题相当于01背包问题，不过要从晚会结束时间t向前挑。
-状态转移方程：
+<p>分析：<br>
+总时长为t，从n个候选节目挑选若干使得满意度最大，无论挑选的节目总时长是否达到t，最后一个节目表演结束都要踩着晚会结束的时间点才会使得本次选择的满意度最大化。挑选问题相当于01背包问题，不过要从晚会结束时间t向前挑。<br>
+状态转移方程：<br>
 $$
-dp[i][j] =
-\begin{cases}
-dp[i+1][j], &amp; j &lt; c[i] \\
-max(dp[i][j], dp[i+1][j-c[i]] + (a[i] + b[i] * (j-c[i]))), &amp; j &gt;= c[i]
-\end{cases}
+dp[i][j]= \begin{cases} dp[i+1][j], &amp; j &lt; c[i] \ max(dp[i][j], dp[i+1][j-c[i]] + (a[i] + b[i] * (j-c[i]))), &amp; j &gt;= c[i] \end{cases}
 $$</p>
-<p>代码：</p>
+<p>代码：  </p>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">yt_3_party</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
@@ -175,21 +171,21 @@ $$</p>
 
 
 <h4>题目3 - Beam Search</h4>
-<p>现在有一个长度为n的权重序列 W1, W2, &hellip;, Wn, 其中Wi表示第i时刻的权重分布, Wi可表示为Wi = (Wi1, Wi2, &hellip;, Wim)
-需要在这个权重序列上进行beam search
-beam search 是一个启发式搜索算法
-在给定beam size = n的情况下
-每一时刻， 维护可能最优的K条记录
-下一时刻， 得到可能最优的K*M条记录，保留其中最优的K条
-特别的，若中间步骤中出现重复权重值时，选取字典序较小的
-序列用A-Z表示，所以M值不会超过26</p>
-<p>输入：上述序列arr，n，m，k
-输出：结果列表</p>
-<p>例如：
-输入：arr = [[500, 500],[900, 100],[100, 900]], n=3, m=2, k=3
-输出：[&ldquo;AAB&rdquo;, &ldquo;BAB&rdquo;, &ldquo;AAA&rdquo;]</p>
-<p>分析：
-按照题目说的过程写即可，使用优先队列降低寻找k个最大值时的复杂度</p>
+<p>现在有一个长度为n的权重序列 W1, W2, &hellip;, Wn, 其中Wi表示第i时刻的权重分布, Wi可表示为Wi = (Wi1, Wi2, &hellip;, Wim)<br>
+需要在这个权重序列上进行beam search<br>
+beam search 是一个启发式搜索算法<br>
+在给定beam size = n的情况下<br>
+每一时刻， 维护可能最优的K条记录<br>
+下一时刻， 得到可能最优的K*M条记录，保留其中最优的K条<br>
+特别的，若中间步骤中出现重复权重值时，选取字典序较小的<br>
+序列用A-Z表示，所以M值不会超过26  </p>
+<p>输入：上述序列arr，n，m，k<br>
+输出：结果列表  </p>
+<p>例如：<br>
+输入：arr = [[500, 500],[900, 100],[100, 900]], n=3, m=2, k=3<br>
+输出：[&ldquo;AAB&rdquo;, &ldquo;BAB&rdquo;, &ldquo;AAA&rdquo;]  </p>
+<p>分析：<br>
+按照题目说的过程写即可，使用优先队列降低寻找k个最大值时的复杂度  </p>
 <blockquote>
 <p>注意：字典序中, ascii码更大的排名更靠后</p>
 </blockquote>

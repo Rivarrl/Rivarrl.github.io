@@ -154,7 +154,11 @@ z在0-1之间, x &gt; z的期望为1-z, x &lt; z的期望为z<br>
 总时长为t，从n个候选节目挑选若干使得满意度最大，无论挑选的节目总时长是否达到t，最后一个节目表演结束都要踩着晚会结束的时间点才会使得本次选择的满意度最大化。挑选问题相当于01背包问题，不过要从晚会结束时间t向前挑。<br>
 状态转移方程：<br>
 $$
-dp[i][j]= \begin{cases} dp[i+1][j], &amp; j &lt; c[i] \ max(dp[i][j], dp[i+1][j-c[i]] + (a[i] + b[i] * (j-c[i]))), &amp; j &gt;= c[i] \end{cases}
+dp[i][j]= 
+\begin{cases} 
+dp[i+1][j], &amp; j &lt; c[i] \\ 
+max(dp[i][j], dp[i+1][j-c[i]] + (a[i] + b[i] * (j-c[i]))), &amp; j &gt;= c[i] 
+\end{cases}
 $$</p>
 <p>代码：  </p>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">yt_3_party</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>

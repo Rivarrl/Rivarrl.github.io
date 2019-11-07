@@ -151,26 +151,29 @@ z在0-1之间, x &gt; z的期望为1-z, x &lt; z的期望为z<br>
 输入： arr = [[3, 2, 2], [2, 3, 4]], t=7, n=2<br>
 输出： 18</p>
 <p>分析：<br>
-总时长为t，从n个候选节目挑选若干使得满意度最大，无论挑选的节目总时长是否达到t，最后一个节目表演结束都要踩着晚会结束的时间点才会使得本次选择的满意度最大化。挑选问题相当于01背包问题，不过要从晚会结束时间t向前挑。<br>
+总时长为t，从n个候选节目挑选若干使得满意度最大，无论挑选的节目总时长是否达到t，最后一个节目表演结束都要踩着晚会结束的时间点才会使得本次选择的满意度最大化，相当于01背包问题，使用动态规划可以解决，不过由于先挑后挑影响总结果，当前的乱序数组是不满足动态规划的特性的，需要<strong>排序</strong>。<br>
+排序条件很隐蔽，我们可以假设第p分钟的时候有i和j两个候选节目相继表演，如果i排在j的后面，整体满意度会增加aj + p * bj  + ai + (p+cj) * bi，如果j排在i的后面，整体满意度会增加ai + p * bi + aj  + (p+ci) * bj，令i排在j后面的满意度更大，不等式两边化简最后会得到 cj * bi &gt; ci * bj, ci/bi &lt; cj/bj，所以ci/bi较小的排在后面（按ci/bi大小倒序排序）才能使整体满意度最大。<br>
+dp[i][j] 表示前i个候选节目的挑选中，最后一个节目在j时刻结束的最大满意度。<br>
 状态转移方程：<br>
 $$
 dp[i][j]= 
 \begin{cases} 
-dp[i+1][j], &amp; j &lt; c[i] \\ 
-max(dp[i][j], dp[i+1][j-c[i]] + (a[i] + b[i] * (j-c[i]))), &amp; j &gt;= c[i] 
+dp[i-1][j], &amp; j &lt; c[i] \\ 
+max(dp[i-1][j], dp[i-1][j-c[i]] + (a[i] + b[i] * (j-c[i]))), &amp; j &gt;= c[i] 
 \end{cases}
 $$</p>
 <p>代码：  </p>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">yt_3_party</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">arr</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">:</span>
-                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">c</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">t</span><span class="p">]</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">c</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="n">t</span><span class="p">]</span>
 </pre></div>
 
 

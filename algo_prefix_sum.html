@@ -90,7 +90,7 @@
         <h4>前缀和及相关题目</h4>
 <p>前缀和是一种实用的技巧，经常用在数据的预处理上，可有效的降低时间复杂度。  </p>
 <p>前缀和的意思就是将一个数值型数组每个位置之前的子数组和计算出来，例如nums = [1,2,4,3]对应的前缀和数组pre = [0,1,2,7,10]，由于它的用途是计算sum(nums[j:i]) = pre[i] - pre[j]，通常需要在0的位置上添加初始值，一般为0。  </p>
-<p>前缀和的题目有一个共同的特点：<strong>在一个数组中统计有多少满足条件的连续子数组，元素之和（也可以变种为求和再取余等）为一个固定值。</strong>  </p>
+<p>前缀和的多数题目有一个共同的特点：<strong>在一个数组中统计有多少满足条件的连续子数组，元素之和（也可以变种为求和再取余等）为一个固定值。</strong>, 关键词：<strong>统计</strong>  </p>
 <p>先来道基本操作题：<br>
 <a href="https://leetcode-cn.com/problems/range-sum-query-immutable/">303. 区域和检索 - 数组不可变</a><br>
 思路：前缀和基本操作，没得可说。。  </p>
@@ -205,7 +205,20 @@
 
 
 <p><a href="https://leetcode-cn.com/problems/shortest-subarray-with-sum-at-least-k">862. 和至少为K的最短子数组</a><br>
-思路：两前缀和相减大于等于K(pre[i] - pre[j] &gt;= K)的最小的i - j值。如果i1和i2都可以与j满足上述要求且i1 &lt; i2，那么i1可被i2代替；而如果j1和j2都可以与i满足上述要求且j1 &lt; j2，那么j2和i的距离更远，是没有用的数据，为减少比较次数，j1和i对比完就要把i从队列中移除。  </p>
+思路：<br>
+把题目翻译一下，求两前缀和相减大于等于K (pre[i] - pre[j] &gt;= K) 的最小的i - j值。  </p>
+<p>在前缀和的基础上还要用个双向的单调队列<br>
+看到这个双向单调队列别慌，来看看为什么要这么复杂的数据结构：</p>
+<p>现在考虑下面的两个情况：  </p>
+<p>如果左边有两个位置j1和j2，j1 &lt; j2，pre[j1] &gt;= pre[j2]，如果当前走到i的位置且与j1满足题目要求，那么也一定可以与j2满足需求，由于j2 &gt; j1，j2距离i更近，所以只要有这种情况，就不再去考虑j1那个位置了，也就是不去考虑pre数组中的逆序的情况。  </p>
+<blockquote>
+<p>想要满足上述要求，维护一个单调递增的栈就可以。  </p>
+</blockquote>
+<p>而一个单增的栈，与当前对比需要从小到大去比，因为从大到小可能第一步就不符合了，从小到大可以保证找到那个最短的数组。</p>
+<p>对于固定的左边位置j，如果与当前的右边位置i1和i2都满足答案要求，i1 &lt; i2，那么i2-j &gt; i1-j，所以如果i1满足条件的时候，i1-j就是j作为子数组左边界的最短子数组的长度，i1再向右移动就不需要j了，所以要pop掉。  </p>
+<blockquote>
+<p>想同时满足上述两个需求，需要一个能从头和尾执行pop的数据结构，就要用双向的队列。</p>
+</blockquote>
 <p>代码：</p>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shortestSubarray</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">K</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="n">pre</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>

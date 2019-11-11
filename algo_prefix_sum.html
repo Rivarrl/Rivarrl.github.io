@@ -91,7 +91,22 @@
 <p>前缀和是一种实用的技巧，经常用在数据的预处理上，可有效的降低时间复杂度。  </p>
 <p>前缀和的意思就是将一个数值型数组每个位置之前的子数组和计算出来，例如nums = [1,2,4,3]对应的前缀和数组pre = [0,1,2,7,10]，由于它的用途是计算sum(nums[j:i]) = pre[i] - pre[j]，通常需要在0的位置上添加初始值，一般为0。  </p>
 <p>前缀和的题目有一个共同的特点：<strong>在一个数组中统计有多少满足条件的连续子数组，元素之和（也可以变种为求和再取余等）为一个固定值。</strong>  </p>
-<p>一般题目会给出一个固定值，也就是sum(nums[j:i])，当我们的程序遍历到i的时候，计算sum(nums[0:i])并更新pre[i]的同时，上述的式子知二求一可找到pre[j]</p>
+<p>先来道基本操作题：<br>
+<a href="https://leetcode-cn.com/problems/range-sum-query-immutable/">303. 区域和检索 - 数组不可变</a><br>
+思路：前缀和基本操作，没得可说。。  </p>
+<p>代码：</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NumArray</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pre</span> <span class="o">+=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">e</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">sumRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+
+
+<p>一般题目会给出一个固定值，也就是sum(nums[j:i])，当我们的程序遍历到i的时候，计算sum(nums[0:i])并更新pre[i]的同时，上述的式子知二求一可找到pre[j]。</p>
 <p>例如下面要贴出来的第一题，找和为K的子数组的个数。  </p>
 <p><a href="https://leetcode-cn.com/problems/subarray-sum-equals-k/">560. 和为K的子数组</a><br>
 思路：典型的前缀和问题，一边计算前缀和，并计数，一边在已经计算过的结果集合中找与当前前缀和差值为K的个数，由于前缀和值的范围不定，结果集合采用哈希表存储比数组更合适。  </p>
@@ -170,7 +185,7 @@
 </pre></div>
 
 
-<p><a href="https://leetcode-cn.com/problems/count-number-of-nice-subarrays/">1248. 统计「优美子数组」</a>
+<p><a href="https://leetcode-cn.com/problems/count-number-of-nice-subarrays/">1248. 统计「优美子数组」</a><br>
 思路：奇数视为1，偶数视为0，和为k的连续子数组就是优美子数组了，剩下的就符合前缀和的标准了。  </p>
 <p>代码：</p>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">numberOfSubarrays2</span><span class="p">(</span><span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -186,6 +201,26 @@
             <span class="n">res</span> <span class="o">+=</span> <span class="n">s</span><span class="p">[</span><span class="n">c</span> <span class="o">-</span> <span class="n">k</span><span class="p">]</span>
         <span class="n">s</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">res</span>
+</pre></div>
+
+
+<p><a href="https://leetcode-cn.com/problems/shortest-subarray-with-sum-at-least-k">862. 和至少为K的最短子数组</a><br>
+思路：两前缀和相减大于等于K(pre[i] - pre[j] &gt;= K)的最小的i - j值。如果i1和i2都可以与j满足上述要求且i1 &lt; i2，那么i1可被i2代替；而如果j1和j2都可以与i满足上述要求且j1 &lt; j2，那么j2和i的距离更远，是没有用的数据，为减少比较次数，j1和i对比完就要把i从队列中移除。  </p>
+<p>代码：</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">shortestSubarray</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">K</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">pre</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">A</span><span class="p">:</span>
+        <span class="n">pre</span> <span class="o">+=</span> <span class="p">[</span><span class="n">pre</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">]</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">q</span> <span class="ow">and</span> <span class="n">pre</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pre</span><span class="p">[</span><span class="n">q</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]:</span>
+            <span class="n">q</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">q</span> <span class="ow">and</span> <span class="n">pre</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">pre</span><span class="p">[</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">K</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="n">q</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span> <span class="k">if</span> <span class="n">res</span> <span class="o">!=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
 </pre></div>
 
 

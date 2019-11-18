@@ -4,14 +4,17 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="秋招题复现（依图科技2019 - 算法） 四道题有三道都没ac，打击很大…复现一下 不保证对，先写下来以后和感兴趣的同学讨论 输入输出就不按照笔试的方式了，直接用函数输入了 题目1 - Ensemble 目前有一个二分类任务，已经有2个模型A B 对于一张图 A模型会输出两个值A0 A1 表示A模型认为这张图属于类别0的概率为A0，1的概率为A1 B和A相同...">
+        <meta name="description" content="秋招题复现（依图科技2019 - 算法） 四道题有三道都没ac，打击很大...复现一下 不保证对，先写下来以后和感兴趣的同学讨论 输入输出就不按照笔试的方式了，直接用函数输入了 题目1 - Ensemble 目前有一个二分类任务，已经有2个模型A B 对于一张图 A模型会输出两个值A0 A1 表示A模型认为这张图属于类别0的概率为A0，1的概率为A1 B和A相同...">
         <meta name="keywords" content="Algorithm, Exam, Python3">
         <link rel="icon" href="./favicon.ico">
 
         <title>【笔试题】依图科技2019算法 - Rivarrl</title>
 
         <!-- Stylesheets -->
-        <link href="./css/all.min.css" rel="stylesheet">
+        <link href="./css/bootstrap.min.css" rel="stylesheet">
+        <link href="./css/fonts.css" rel="stylesheet">
+        <link href="./css/nest.css" rel="stylesheet">
+        <link href="./css/pygment.css" rel="stylesheet">
         <!-- /Stylesheets -->
 
         <!-- RSS Feeds -->
@@ -89,7 +92,7 @@
     <div class="container content">
         <h3>秋招题复现（依图科技2019 - 算法）</h3>
 <blockquote>
-<p>四道题有三道都没ac，打击很大&hellip;复现一下<br>
+<p>四道题有三道都没ac，打击很大...复现一下<br>
 不保证对，先写下来以后和感兴趣的同学讨论</p>
 </blockquote>
 <p>输入输出就不按照笔试的方式了，直接用函数输入了</p>
@@ -178,7 +181,7 @@ $$</p>
 
 
 <h4>题目3 - Beam Search</h4>
-<p>现在有一个长度为n的权重序列 W1, W2, &hellip;, Wn, 其中Wi表示第i时刻的权重分布, Wi可表示为Wi = (Wi1, Wi2, &hellip;, Wim)<br>
+<p>现在有一个长度为n的权重序列 W1, W2, ..., Wn, 其中Wi表示第i时刻的权重分布, Wi可表示为Wi = (Wi1, Wi2, ..., Wim)<br>
 需要在这个权重序列上进行beam search<br>
 beam search 是一个启发式搜索算法<br>
 在给定beam size = n的情况下<br>
@@ -190,7 +193,7 @@ beam search 是一个启发式搜索算法<br>
 输出：结果列表  </p>
 <p>例如：<br>
 输入：arr = [[500, 500],[900, 100],[100, 900]], n=3, m=2, k=3<br>
-输出：[&ldquo;AAB&rdquo;, &ldquo;BAB&rdquo;, &ldquo;AAA&rdquo;]  </p>
+输出：["AAB", "BAB", "AAA"]  </p>
 <p>分析：<br>
 按照题目说的过程写即可，使用优先队列降低寻找k个最大值时的复杂度  </p>
 <blockquote>
@@ -263,7 +266,7 @@ beam search 是一个启发式搜索算法<br>
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>© blogname 2015</small>
+                            <small>© Rivarrl 2018</small>
                         </p>
                     </div>
                 </div>

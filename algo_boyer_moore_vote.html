@@ -11,7 +11,10 @@
         <title>摩尔投票法求众数 - Rivarrl</title>
 
         <!-- Stylesheets -->
-        <link href="./css/all.min.css" rel="stylesheet">
+        <link href="./css/bootstrap.min.css" rel="stylesheet">
+        <link href="./css/fonts.css" rel="stylesheet">
+        <link href="./css/nest.css" rel="stylesheet">
+        <link href="./css/pygment.css" rel="stylesheet">
         <!-- /Stylesheets -->
 
         <!-- RSS Feeds -->
@@ -95,20 +98,70 @@
 思路：这道题有个很隐蔽的已知条件，我看到题解才发现，那就是题目和我们保证这个众数是存在的，这个保证是摩尔投票法的前提。
 数组长度n=len(nums)<br>
 按题目中定义的，个数超过n//2的数是众数，那么众数的个数至少是n//2+1个，比如n=6，z&gt;=4；n=7，z&gt;=4，所以n无论是奇数偶数，众数都要比非众数至少多出1个。推出众数最多只能存在1个，而题目又保证有这个众数，说明nums中肯定有个数是众数。<br>
-摩尔投票法就是在这个条件下得以正常运行的，它令当前出现次数较多的数&rdquo;假定&rdquo;为众数，然后去统计众数和非众数的个数，当它们的个数相等时，就不看之前的部分，因为众数至少比非众数多1，如果再次出现，计数器+1，如果出现其它数字，计数器-1，如果计数器减到0，就重新假定下一个数为众数，直到最后剩下的那个数就是众数。  </p>
+摩尔投票法就是在这个条件下得以正常运行的，它令当前出现次数较多的数"假定"为众数，然后去统计众数和非众数的个数，当它们的个数相等时，就不看之前的部分，因为众数至少比非众数多1，如果再次出现，计数器+1，如果出现其它数字，计数器-1，如果计数器减到0，就重新假定下一个数为众数，直到最后剩下的那个数就是众数。  </p>
 <p>例如：<br>
 nums = [1,1,2,2,2,1,1]<br>
-观察得知众数是1，用摩尔投票法，需要定义两个变量，base和ctr，base用来选择当前的“众数”，初始为None，ctr是它的计数器，初始为0。
-i   | current | base | ctr |
--   | - | - | - |
-init| / | None  |  0  |<br>
-0   | 1 | 1 | 1 |
-1   | 1 | 1 | 2 |
-2   | 2 | 1 | 1 |
-3   | 2 | 1 | 0 |
-4   | 2 | 2 | 1 |
-5   | 1 | 2 | 0 |
-6   | 1 | 1 | 1 |</p>
+观察得知众数是1，用摩尔投票法，需要定义两个变量，base和ctr，base用来选择当前的“众数”，初始为None，ctr是它的计数器，初始为0。  </p>
+<table>
+<thead>
+<tr>
+<th>i</th>
+<th>current</th>
+<th>base</th>
+<th>ctr</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>init</td>
+<td>/</td>
+<td>None</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
 <p>最终答案就是i=6的时候的base值1  </p>
 <p>按它的原理分析一下：<br>
 走到i=3的时候出现两个众数和两个非众数，i&lt;=3的部分无视掉也可以在后面找到众数，继续看后面<br>
@@ -190,7 +243,7 @@ init| / | None  |  0  |<br>
                         <p class="pull-right text-right">
                             <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
                             <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
-                            <small>© blogname 2015</small>
+                            <small>© Rivarrl 2018</small>
                         </p>
                     </div>
                 </div>

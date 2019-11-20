@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Union-Find（并查集）是一种常用的数据结构，它用来解决动态连通性问题。 啥是动态连通性问题呢？书中举的几个例子很好理解，贴两个转述一下。 计算机-局域网问题：...">
+        <meta name="keywords" content="Algorithm, Graph, Python3">
+        <link rel="icon" href="./favicon.ico">
+
+        <title>【算法学习】UnionFind算法 - Rivarrl</title>
+
+        <!-- Stylesheets -->
+        <link href="./css/bootstrap.min.css" rel="stylesheet">
+        <link href="./css/fonts.css" rel="stylesheet">
+        <link href="./css/nest.css" rel="stylesheet">
+        <link href="./css/pygment.css" rel="stylesheet">
+        <!-- /Stylesheets -->
+
+        <!-- RSS Feeds -->
+        <!-- /RSS Feeds -->
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+        <!-- mathjax config similar to math.stackexchange -->
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+                inlineMath: [ ['$', '$'] ],
+                displayMath: [ ['$$', '$$']],
+                processEscapes: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            messageStyle: "none",
+            "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] }
+        });
+        </script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    </head>
+
+    <body>
+
+        <!-- Header -->
+    <div class="header-container" style="background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('./images/background.jpg'); background-position: center; background-size: cover;">
+
+            <!-- Static navbar -->
+            <div class="container">
+                <div class="header-nav">
+                    <div class="header-logo">
+                        <a class="pull-left" href="./"><img class="mr20" src="./images/logo.png" alt="logo">Rivarrl</a>
+                    </div>
+                    <div class="nav pull-right">
+                                <a href="./">Homepage</a>
+                                <a href="./categories.html">Categories</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Static navbar -->
+
+            <!-- Header -->
+    <!-- Header -->
+    <div class="container header-wrapper">
+        <div class="row">
+              <div class="col-lg-12">
+                  <div class="header-content">
+                      <h1 class="header-title">【算法学习】UnionFind算法</h1>
+                      <p class="header-date">By <a href="./author/rivarrl.html">Rivarrl</a>, 2019-11-20 21:42:00, modified 2019-11-20 21:42:00, in category <a href="./category/algorithm.html">Algorithm</a></p>
+                      <div class="header-underline"></div>
+                      <div class="clearfix"></div>
+                      <p class="pull-right header-tags">
+                          <span class="glyphicon glyphicon-tags mr5" aria-hidden="true"></span>
+<a href="./tag/algorithm.html">Algorithm</a>, <a href="./tag/graph.html">Graph</a>, <a href="./tag/python3.html">Python3</a>                      </p>
+                  </div>
+              </div>
+        </div>
+    </div>
+    <!-- /Header -->
+            <!-- /Header -->
+
+        </div>
+        <!-- /Header -->
+
+
+        <!-- Content -->
+    <div class="container content">
+        <blockquote>
+<p>Union-Find（并查集）是一种常用的数据结构，它用来解决动态连通性问题。  </p>
+<p>啥是动态连通性问题呢？书中举的几个例子很好理解，贴两个转述一下。  </p>
+</blockquote>
+<p>计算机-局域网问题：<br>
+一间没有网络覆盖的机房中有n台电脑，起初他们有n个互不相干的点，这就是连通分量，起个变量名叫ctr。每当有两台不属于同一连通分量的电脑建立连接之后，连通分量数ctr会-1，最终想知道两台电脑之间有没有连接上，或是整间机房有多少张局域网。</p>
+<p>人际关系问题：<br>
+我们假定朋友的朋友就是朋友，现场有n个人，我们再次假定每两个人握过手之后就是<del>塑料</del>朋友了，那么最开始的时候没有人握过手，连通分量数为ctr=n，每有两个不是朋友关系的人握手，ctr就会-1，最终想知道最后有多少组朋友关系，或者指定两个人问他们是不是朋友关系。</p>
+<p>上述的问题就属于动态连通性问题，都可以用union-find来解决。  </p>
+<blockquote>
+<p>Union-Find的三种实现分别是quick-find，quick-union和weighted-quick-union  </p>
+</blockquote>
+<p>首先贴出UnionFind的框架：</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UF</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="c1"># 触点连通的根节点编号</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+        <span class="c1"># 连通分量数</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctr</span> <span class="o">=</span> <span class="n">n</span>
+
+    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctr</span>
+
+    <span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+
+
+<p><strong>quick-find算法</strong><br>
+quick-find的思想很简单，如果p和q是连接关系，那么idx[p]=idx[q]，使所有同一连通分量内的触点的idx值相同即可。<br>
+代码：</p>
+<div class="highlight"><pre><span></span><span class="c1"># quick-find实现</span>
+<span class="k">class</span> <span class="nc">QuickFindUF</span><span class="p">(</span><span class="n">UF</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span> <span class="k">return</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctr</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+
+
+<p>quick-find中的find时间复杂度低，是O(1)，而union的时间复杂度高，是O(n)。  </p>
+<p><strong>quick-union算法</strong><br>
+union复杂度过高，导致quick-find整体复杂度太高，需要进行优化。优化的地方就是idx的意义，quick-find中idx中有太多相同的值，导致它能表达的东西不多。<br>
+我们使用quick-union的方法，让idx[p]指向与它直接相连的上一个节点，初始化的时候让每个节点的idx值等于自己。让find的过程变得像顺藤摸瓜一样，顺着当前的p得到与它相连接的idx[p]，再通过idx[p]找到idx[idx[p]]，最终找到一个自连接的节点，即idx[x] = x，这个点就是p的根节点。  </p>
+<p>代码：</p>
+<div class="highlight"><pre><span></span><span class="c1"># quick-union的实现</span>
+<span class="k">class</span> <span class="nc">QuickUnionUF</span><span class="p">(</span><span class="n">UF</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">!=</span> <span class="n">p</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">p</span>
+
+    <span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span> <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctr</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+
+
+<p>quick-union很像一棵N叉树，find和union时间复杂度都是O(h)。（h是p所在位置的深度）<br>
+quick-union的整体复杂度已经降了下来，但是考虑极端情况的话，比如p所在的位置很深（一条链表的尾部）的时候执行find(p)，时间复杂度还是会很高。<br>
+如何避免树过深，是解决quick-union算法的根本问题。  </p>
+<p><strong>加权quick-union算法</strong><br>
+这时人们发现quick-union还有可以优化的点，那就是union的时候，很随意的把p的祖先节点一股脑的接到了q的祖先节点上，如果p所在的是一颗很深的树，而q的是一颗小树，那么把p所在的树接在q的后面，无疑会增加树的整体高度，反之则不会。  </p>
+<p>weighted-quick-union就是在quick-union的基础上加上一个sz数组来统计每个编号的点作为根节点的树有多少节点。根据sz的值来决定本次是p树去接q树还是q树去接p树。  </p>
+<p>代码：</p>
+<div class="highlight"><pre><span></span><span class="c1"># weighted-quick-union</span>
+<span class="k">class</span> <span class="nc">WeightedQuickUnionUF</span><span class="p">(</span><span class="n">UF</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="c1"># 存储以p为根节点的分量大小</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sz</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">!=</span> <span class="n">p</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">p</span>
+
+    <span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span> <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sz</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">idx</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sz</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctr</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+
+
+<p>weighted-quick-union由于减小了树的高度，find和union的时间复杂度为O(lgn)  </p>
+<p><strong>路径压缩的加权quick-union算法</strong><br>
+这个算法据说union和find时间复杂度都是接近O(1)的，tql。不过我查了一下，涉及到<strong>持久化数组</strong>等前置技能点，受限于现在太菜看不懂，等后续把前置技能点点满了再来补上吧。</p>
+<p>相关题目：<br>
+<a href="https://leetcode-cn.com/problems/smallest-string-with-swaps/">1202. 交换字符串中的元素</a><br>
+思路：<br>
+union-find派上用场了，我们直接用改良版里已知最快的加权quick-union，使同一连通分量里的字符字典序排序最低就可以了。  </p>
+<p>代码：</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">smallestStringWithSwaps</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">pairs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="c1"># 找连通分量，用union-find，相同连接中的位置的字符相对字典序最低</span>
+    <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">parent</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">!=</span> <span class="n">p</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">p</span>
+
+    <span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">root_i</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">root_j</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">root_i</span> <span class="o">==</span> <span class="n">root_j</span><span class="p">:</span> <span class="k">return</span>
+        <span class="k">if</span> <span class="n">sz</span><span class="p">[</span><span class="n">root_i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">sz</span><span class="p">[</span><span class="n">root_j</span><span class="p">]:</span>
+            <span class="n">parent</span><span class="p">[</span><span class="n">root_j</span><span class="p">]</span> <span class="o">=</span> <span class="n">root_i</span>
+            <span class="n">sz</span><span class="p">[</span><span class="n">root_i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sz</span><span class="p">[</span><span class="n">root_j</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parent</span><span class="p">[</span><span class="n">root_i</span><span class="p">]</span> <span class="o">=</span> <span class="n">root_j</span>
+            <span class="n">sz</span><span class="p">[</span><span class="n">root_j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sz</span><span class="p">[</span><span class="n">root_i</span><span class="p">]</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">sz</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+        <span class="n">union</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">find</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">ls</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">s</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">ls</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">v</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)):</span>
+            <span class="n">ls</span><span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+</pre></div>
+
+
+        
+    </div>
+        <!-- /Content --> 
+
+        <!-- Footer -->
+        <div class="footer gradient-2">
+            <div class="container footer-container ">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Sitemap</div>
+                        <ul class="list-unstyled">
+                            <li><a href="./archives.html">Archives</a></li>
+                            <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./authors.html">Authors</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="tencent://message/?uin=1049793871&Site=Sambow&Menu=yes" target="_blank">QQ</a></li>
+                            <li><a href="http://github.com/Rivarrl" target="_blank">GitHub</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+                        <div class="footer-title">Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+                            <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+                        </ul>
+                    </div> 
+                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                        <p class="pull-right text-right">
+                            <small><em>Proudly powered by <a href="http://docs.getpelican.com/" target="_blank">pelican</a></em></small><br/>
+                            <small><em>Theme and code by <a href="https://github.com/molivier" target="_blank">molivier</a></em></small><br/>
+                            <small>© Rivarrl 2018</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Footer -->
+        <!-- live2d -->
+        <script src="./js/L2Dwidget.min.js"></script>
+        <script src="./js/L2Dwidget.0.min.js"></script>
+        <script>
+            L2Dwidget.init({
+                "model":{
+                    "scale":1,"hHeadPos":0.5,"vHeadPos":0.618,
+                    "jsonPath": "./live2d-models/live2d-widget-model-tororo/assets/tororo.model.json"
+                },
+                "display":{
+                    "superSample":2,"width":100,"height":220,"position":"right","hOffset":-30,"vOffset":-200
+                },
+                "mobile":{
+                    "show":false,"scale":0.5
+                },
+                "react":{
+                    "opacityDefault":0.9,"opacityOnHover":0.2
+                }
+            });
+        </script>
+        <div id="live2d-widget">
+            <canvas id="live2dcanvas" width="200" height="440"
+            style="position: fixed; opacity: 1; right: 0px; bottom: 0; z-index: 99999; pointer-events: none;"></canvas>
+        </div>
+    </body>
+</html>
